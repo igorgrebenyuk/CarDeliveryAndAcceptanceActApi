@@ -1,6 +1,13 @@
-﻿namespace CarDeliveryAndAcceptance.Dal.Contracts;
+﻿using FinalExercise.Dal.Contracts.Interfaces;
 
-public abstract class BaseAuditEntity
+namespace CarDeliveryAndAcceptance.Dal.Contracts;
+
+public abstract class BaseAuditEntity : 
+    IEntity,
+    IEntityWithId,
+    IEntityAuditCreated,
+    IEntityAuditUpdate,
+    IEntityAuditDeletedAt
 {
     /// <summary>
     /// Уникальный идентификатор автомобиля

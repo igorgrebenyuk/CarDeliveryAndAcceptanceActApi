@@ -1,8 +1,10 @@
 <Solution>
   <Folder Name="/DataAccessLayer/">
+    <Project Path="DataAccessLayer/CarDeliveryAndAcceptance.Context.EntityFrameworkCore/CarDeliveryAndAcceptance.Context.EntityFrameworkCore.csproj" />
     <Project Path="DataAccessLayer/CarDeliveryAndAcceptance.Context/CarDeliveryAndAcceptance.Context.csproj" />
     <Project Path="DataAccessLayer/CarDeliveryAndAcceptance.Dal.Contracts/CarDeliveryAndAcceptance.Dal.Contracts.csproj" />
   </Folder>
   <Project Path="CarDelivery&amp;AcceptanceActApi/CarDelivery&amp;AcceptanceActApi.csproj" />
+  <Project Path="CarDeliveryAndAcceptance.Entities.Configurations/CarDeliveryAndAcceptance.Entities.Configurations.csproj" />
   <Project Path="CarDeliveryAndAcceptance.Entities/CarDeliveryAndAcceptance.Entities.csproj" />
 </Solution>

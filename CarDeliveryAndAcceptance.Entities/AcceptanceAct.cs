@@ -12,7 +12,7 @@ public class AcceptanceAct : BaseAuditEntity
     /// <summary>
     /// Уникальный идентификатор Города
     /// </summary>
-    public string IdCity { get; set; }
+    public Guid IdCity { get; set; }
 
     /// <summary>
     /// Дата проведения Акта приемки-передачи
@@ -22,15 +22,15 @@ public class AcceptanceAct : BaseAuditEntity
     /// <summary>
     /// Уникальный идентификатор Покупателя
     /// </summary>
-    public string IdBuyer { get; set; }
+    public Guid IdBuyer { get; set; }
 
     /// <summary>
     /// Уникальный идентификатор Продавца
     /// </summary>
-    public string IdSalesman { get; set; }
+    public Guid IdSalesman { get; set; }
 
     /// <summary>
     /// Уникальный идентификатор Продавца
     /// </summary>
-    public string IdCar { get; set; }
+    public Guid IdCar { get; set; }
 }

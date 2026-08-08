@@ -14,5 +14,6 @@ public class CarDeliveryAndAcceptanceContext : DbContext
         AppContext.SetSwitch("Npgsql.EnableLegacyTimestampBehavior", isEnabled: true);
         AppContext.SetSwitch("Npgsql.DisableDateTimeInfinityConversions", isEnabled: true);
     }
-
+    
+    
 }
