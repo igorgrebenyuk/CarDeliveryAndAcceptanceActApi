@@ -7,4 +7,5 @@
   <Project Path="CarDelivery&amp;AcceptanceActApi/CarDelivery&amp;AcceptanceActApi.csproj" />
   <Project Path="CarDeliveryAndAcceptance.Entities.Configurations/CarDeliveryAndAcceptance.Entities.Configurations.csproj" />
   <Project Path="CarDeliveryAndAcceptance.Entities/CarDeliveryAndAcceptance.Entities.csproj" />
+  <Project Path="CarDeliveryAndAcceptance.Repositories/CarDeliveryAndAcceptance.Repositories.csproj" />
 </Solution>

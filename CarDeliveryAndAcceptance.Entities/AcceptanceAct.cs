@@ -2,35 +2,58 @@
 
 namespace CarDeliveryAndAcceptance.Entities;
 
+/// <summary>
+/// Сущность, представляющая акт приема-передачи автомобиля
+/// </summary>
 public class AcceptanceAct : BaseAuditEntity
 {
     /// <summary>
-    /// Уникальный идентификатор Акта приемки-передачи
+    /// Уникальный идентификатор акта приема-передачи
     /// </summary>
     public Guid Id { get; set; }
 
     /// <summary>
-    /// Уникальный идентификатор Города
-    /// </summary>
-    public Guid IdCity { get; set; }
-
-    /// <summary>
-    /// Дата проведения Акта приемки-передачи
+    /// Дата и время создания акта
     /// </summary>
     public DateTimeOffset DateOfCreation { get; set; }
 
     /// <summary>
-    /// Уникальный идентификатор Покупателя
+    /// Уникальный идентификатор города
     /// </summary>
-    public Guid IdBuyer { get; set; }
+    public Guid CityId { get; set; }
 
     /// <summary>
-    /// Уникальный идентификатор Продавца
+    /// Город составления акта
     /// </summary>
-    public Guid IdSalesman { get; set; }
+    public virtual City City { get; set; }
 
     /// <summary>
-    /// Уникальный идентификатор Продавца
+    /// Уникальный идентификатор покупателя
     /// </summary>
-    public Guid IdCar { get; set; }
+    public Guid BuyerId { get; set; }
+
+    /// <summary>
+    /// Покупатель
+    /// </summary>
+    public virtual Buyer Buyer { get; set; }
+
+    /// <summary>
+    /// Уникальный идентификатор продавца
+    /// </summary>
+    public Guid SalesmanId { get; set; }
+
+    /// <summary>
+    /// Продавец
+    /// </summary>
+    public virtual Salesman Salesman { get; set; }
+
+    /// <summary>
+    /// Уникальный идентификатор автомобиля
+    /// </summary>
+    public Guid CarId { get; set; }
+
+    /// <summary>
+    /// Принимаемый/передаваемый автомобиль
+    /// </summary>
+    public virtual Car Car { get; set; }
 }

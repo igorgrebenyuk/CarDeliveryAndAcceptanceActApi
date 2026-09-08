@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using CarDeliveryAndAcceptance.Entities;
 using FinalExercise.Context.EntityFrameworkCore;
+using FinalExercise.Dal.Contracts.Interfaces;
 
 namespace CarDeliveryAndAcceptance.Entities.Configurations;
 
@@ -19,14 +20,16 @@ public class CityConfiguration  : IEntityTypeConfiguration<City>
         builder.CreateAuditConfiguration();
         builder.UpdateAuditConfiguration();
 
-        // Первичный ключ
-        builder.HasKey(x => x.Id);
-
+        
         // Настройка названия города
         builder.Property(x => x.CityName)
             .IsRequired()
             .HasMaxLength(100);
-
+        
+        builder.HasIndex(x => x.CityName)
+            .HasDatabaseName("IX_Cities_CityName")
+            .IsUnique()
+            .HasFilter($"\"{nameof(IEntityAuditDeletedAt.DeletedAt)}\" IS NULL");
     }
 
 }

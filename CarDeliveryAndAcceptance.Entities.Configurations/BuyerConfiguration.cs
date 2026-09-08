@@ -1,4 +1,5 @@
 ﻿using FinalExercise.Context.EntityFrameworkCore;
+using FinalExercise.Dal.Contracts.Interfaces;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
@@ -17,7 +18,6 @@ public class BuyerConfiguration :  IEntityTypeConfiguration<Buyer>
         builder.CreateAuditConfiguration();
         builder.UpdateAuditConfiguration();
 
-        // Настройка свойств (ограничения длины и обязательность)
         builder.Property(x => x.BuyerName)
             .IsRequired()
             .HasMaxLength(150);
@@ -30,6 +30,9 @@ public class BuyerConfiguration :  IEntityTypeConfiguration<Buyer>
             .IsRequired()
             .HasMaxLength(50);
 
-        
+        builder.HasIndex(x => new { x.BuyerName, x.BuyerFirstName, x.BuyerSurname })
+            .HasDatabaseName("IX_Buyers_FullName")
+            .IsUnique()
+            .HasFilter($"\"{nameof(IEntityAuditDeletedAt.DeletedAt)}\" IS NULL");
     }
 }

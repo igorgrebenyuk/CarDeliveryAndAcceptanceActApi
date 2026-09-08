@@ -1,8 +1,12 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using CarDeliveryAndAcceptance.Dal.Contracts.Repositories;
+using Microsoft.EntityFrameworkCore;
 
 namespace CarDeliveryAndAcceptance.Context;
 
-public class CarDeliveryAndAcceptanceContext : DbContext
+public class CarDeliveryAndAcceptanceContext : DbContext,
+    IReader,
+    IWriter,
+    IUnitOfWork
 {
     /// <summary>
     /// Инициализирует новый экземпляр <see cref="CarDeliveryAndAcceptanceContext"/>
@@ -15,5 +19,27 @@ public class CarDeliveryAndAcceptanceContext : DbContext
         AppContext.SetSwitch("Npgsql.DisableDateTimeInfinityConversions", isEnabled: true);
     }
     
-    
+    IQueryable<TEntity> IReader.Read<TEntity>()
+        => base.Set<TEntity>()
+            .AsNoTracking();
+
+    void IWriter.Add<TEntity>(TEntity entity)
+        => base.Entry(entity).State = EntityState.Added;
+
+    void IWriter.Update<TEntity>(TEntity entity)
+        => base.Entry(entity).State = EntityState.Modified;
+
+    void IWriter.Delete<TEntity>(TEntity entity)
+        => base.Entry(entity).State = EntityState.Deleted;
+
+    async Task<int> IUnitOfWork.SaveChangesAsync(CancellationToken cancellationToken)
+    {
+        var count = await base.SaveChangesAsync(cancellationToken);
+        foreach (var entry in base.ChangeTracker.Entries().ToArray())
+        {
+            entry.State = EntityState.Detached;
+        }
+
+        return count;
+    }
 }

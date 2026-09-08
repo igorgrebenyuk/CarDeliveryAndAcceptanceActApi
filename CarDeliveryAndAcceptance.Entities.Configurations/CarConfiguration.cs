@@ -1,4 +1,5 @@
 ﻿using FinalExercise.Context.EntityFrameworkCore;
+using FinalExercise.Dal.Contracts.Interfaces;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
@@ -18,7 +19,6 @@ public class CarConfiguration : IEntityTypeConfiguration<Car>
         builder.CreateAuditConfiguration();
         builder.UpdateAuditConfiguration();
 
-        // Настройка свойств (ограничения длины и обязательность)
         builder.Property(x => x.MakeAndModel)
             .IsRequired()
             .HasMaxLength(150);
@@ -45,13 +45,17 @@ public class CarConfiguration : IEntityTypeConfiguration<Car>
 
         builder.Property(x => x.Color)
             .HasMaxLength(50);
-
-        // Индексы для оптимизации поиска и обеспечения уникальности
-        builder.HasIndex(x => x.LicensePlate)
-            .IsUnique(); 
-
+        
+        
         builder.HasIndex(x => x.VinCode)
-            .IsUnique(); // VIN-код всегда уникален
+            .HasDatabaseName("IX_Cars_VinCode")
+            .IsUnique()
+            .HasFilter($"\"{nameof(IEntityAuditDeletedAt.DeletedAt)}\" IS NULL");
+
+        builder.HasIndex(x => x.LicensePlate)
+            .HasDatabaseName("IX_Cars_LicensePlate")
+            .IsUnique()
+            .HasFilter($"\"{nameof(IEntityAuditDeletedAt.DeletedAt)}\" IS NULL");
     }
     
 }
