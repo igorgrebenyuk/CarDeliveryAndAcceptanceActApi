@@ -7,7 +7,6 @@ namespace CarDeliveryAndAcceptance.Entities
     /// </summary>
     public class Buyer : BaseAuditEntity
     {
-        
         /// <summary>
         /// Название покупателя
         /// </summary>

@@ -19,10 +19,14 @@ public class CarConfiguration : IEntityTypeConfiguration<Car>
         builder.CreateAuditConfiguration();
         builder.UpdateAuditConfiguration();
 
-        builder.Property(x => x.MakeAndModel)
+        builder.Property(x => x.Mark)
             .IsRequired()
-            .HasMaxLength(150);
+            .HasMaxLength(100);
 
+        builder.Property(x => x.Model)
+            .IsRequired()
+            .HasMaxLength(100);
+        
         builder.Property(x => x.LicensePlate)
             .IsRequired()
             .HasMaxLength(20);

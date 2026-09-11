@@ -7,7 +7,7 @@ namespace CarDeliveryAndAcceptance.Entities
     /// </summary>
     public class Salesman : BaseAuditEntity
     {
-
+        
         /// <summary>
         /// Название продавца
         /// </summary>

@@ -5,12 +5,17 @@ namespace CarDeliveryAndAcceptance.Entities
     public class Car : BaseAuditEntity
     {
        
-
+       
         /// <summary>
-        /// Марка, модель
+        /// Марка
         /// </summary>
-        public string MakeAndModel { get; set; } = string.Empty;
-
+        public string Mark { get; set; } = string.Empty;
+        
+        /// <summary>
+        /// Модель
+        /// </summary>
+        public string Model { get; set; } = string.Empty;
+        
         /// <summary>
         /// Регистрационный знак 
         /// </summary>
@@ -41,6 +46,8 @@ namespace CarDeliveryAndAcceptance.Entities
         /// </summary>
         public string BodyNumber { get; set; } = string.Empty;
 
+        
+        // Color по идее можно хранить в виде специалього типа, просто у ИИ спросить
         /// <summary>
         /// Цвет
         /// </summary>
