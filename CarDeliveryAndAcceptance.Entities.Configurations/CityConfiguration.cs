@@ -1,8 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using CarDeliveryAndAcceptance.Entities;
-using FinalExercise.Context.EntityFrameworkCore;
-using FinalExercise.Dal.Contracts.Interfaces;
+using CarDeliveryAndAcceptance.Context.EntityFrameworkCore;
+using CarDeliveryAndAcceptance.Dal.Contracts.Interfaces;
 
 namespace CarDeliveryAndAcceptance.Entities.Configurations;
 

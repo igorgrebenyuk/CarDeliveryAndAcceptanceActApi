@@ -7,10 +7,6 @@ namespace CarDeliveryAndAcceptance.Entities;
 /// </summary>
 public class AcceptanceAct : BaseAuditEntity
 {
-    /// <summary>
-    /// Уникальный идентификатор акта приема-передачи
-    /// </summary>
-    public Guid Id { get; set; }
 
     /// <summary>
     /// Дата и время создания акта

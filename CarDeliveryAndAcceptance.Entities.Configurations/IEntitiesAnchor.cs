@@ -1,4 +1,4 @@
-﻿namespace FinalExercise.Entities.Configurations;
+﻿namespace CarDeliveryAndAcceptance.Entities.Configurations;
 
 /// <summary>
 /// Якорный интерфейс для сканирования сборки

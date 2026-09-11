@@ -8,12 +8,13 @@
 
     <ItemGroup>
       <PackageReference Include="Microsoft.EntityFrameworkCore" Version="10.0.9" />
+        <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="10.0.3" />
     </ItemGroup>
 
     <ItemGroup>
       <ProjectReference Include="..\CarDeliveryAndAcceptance.Entities\CarDeliveryAndAcceptance.Entities.csproj" />
       <ProjectReference Include="..\DataAccessLayer\CarDeliveryAndAcceptance.Context.EntityFrameworkCore\CarDeliveryAndAcceptance.Context.EntityFrameworkCore.csproj" />
-      <ProjectReference Include="..\DataAccessLayer\CarDeliveryAndAcceptance.Context\CarDeliveryAndAcceptance.Context.csproj" />
+      
     </ItemGroup>
 
 </Project>

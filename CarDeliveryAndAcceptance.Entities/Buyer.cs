@@ -7,12 +7,7 @@ namespace CarDeliveryAndAcceptance.Entities
     /// </summary>
     public class Buyer : BaseAuditEntity
     {
-        /// <summary>
-        /// Уникальный идентификатор покупателя
-        /// </summary>
         
-        public Guid Id { get; set; }
-
         /// <summary>
         /// Название покупателя
         /// </summary>

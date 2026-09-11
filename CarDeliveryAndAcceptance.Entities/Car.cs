@@ -4,10 +4,7 @@ namespace CarDeliveryAndAcceptance.Entities
 {
     public class Car : BaseAuditEntity
     {
-        /// <summary>
-        /// Уникальный идентификатор автомобиля
-        /// </summary>
-        public Guid Id { get; set; }
+       
 
         /// <summary>
         /// Марка, модель

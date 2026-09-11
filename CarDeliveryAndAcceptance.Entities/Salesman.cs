@@ -7,10 +7,6 @@ namespace CarDeliveryAndAcceptance.Entities
     /// </summary>
     public class Salesman : BaseAuditEntity
     {
-        /// <summary>
-        /// Уникальный идентификатор продавца
-        /// </summary>
-        public Guid Id { get; set; }
 
         /// <summary>
         /// Название продавца

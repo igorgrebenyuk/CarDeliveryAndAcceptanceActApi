@@ -1,4 +1,4 @@
-﻿namespace FinalExercise.Dal.Contracts.Interfaces;
+﻿namespace CarDeliveryAndAcceptance.Dal.Contracts.Interfaces;
 
 /// <summary>
 /// Сущность с идентификатором

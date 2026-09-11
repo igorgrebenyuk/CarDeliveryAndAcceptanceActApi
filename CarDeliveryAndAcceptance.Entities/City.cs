@@ -4,10 +4,6 @@ namespace CarDeliveryAndAcceptance.Entities;
 
 public class City : BaseAuditEntity
 {
-    /// <summary>
-    /// Уникальный идентификатор города
-    /// </summary>
-    public Guid Id { get; set; }
     
     /// <summary>
     /// Название города

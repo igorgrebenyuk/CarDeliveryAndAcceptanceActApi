@@ -1,7 +1,7 @@
-﻿using FinalExercise.Dal.Contracts.Interfaces;
+﻿using CarDeliveryAndAcceptance.Dal.Contracts.Interfaces;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
-namespace FinalExercise.Context.EntityFrameworkCore;
+namespace CarDeliveryAndAcceptance.Context.EntityFrameworkCore;
 
 /// <summary>
 /// Методы расширения для <see cref="EntityTypeBuilder"/>

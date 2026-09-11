@@ -1,8 +1,9 @@
 ﻿using CarDeliveryAndAcceptance.Dal.Contracts.Repositories;
+using CarDeliveryAndAcceptance.Entities.Configurations;
 using Microsoft.EntityFrameworkCore;
 
 namespace CarDeliveryAndAcceptance.Context;
-
+ 
 public class CarDeliveryAndAcceptanceContext : DbContext,
     IReader,
     IWriter,
@@ -18,7 +19,12 @@ public class CarDeliveryAndAcceptanceContext : DbContext,
         AppContext.SetSwitch("Npgsql.EnableLegacyTimestampBehavior", isEnabled: true);
         AppContext.SetSwitch("Npgsql.DisableDateTimeInfinityConversions", isEnabled: true);
     }
-    
+    /// <inheritdoc />
+    protected override void OnModelCreating(ModelBuilder modelBuilder)
+    {
+        base.OnModelCreating(modelBuilder);
+        modelBuilder.ApplyConfigurationsFromAssembly(typeof(IEntitiesAnchor).Assembly);
+    }
     IQueryable<TEntity> IReader.Read<TEntity>()
         => base.Set<TEntity>()
             .AsNoTracking();

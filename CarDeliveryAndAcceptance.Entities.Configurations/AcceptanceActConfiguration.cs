@@ -1,5 +1,5 @@
-﻿using FinalExercise.Context.EntityFrameworkCore;
-using FinalExercise.Dal.Contracts.Interfaces;
+﻿using CarDeliveryAndAcceptance.Context.EntityFrameworkCore;
+using CarDeliveryAndAcceptance.Dal.Contracts.Interfaces;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
@@ -43,5 +43,10 @@ public class AcceptanceActConfiguration :  IEntityTypeConfiguration<AcceptanceAc
             .HasForeignKey(x => x.CarId)
             .IsRequired()
             .OnDelete(DeleteBehavior.Restrict);
+        
+        builder.HasIndex(x => new { x.CarId, x.BuyerId, x.SalesmanId, x.DateOfCreation })
+            .HasDatabaseName("IX_AcceptanceActs")
+            .IsUnique()
+            .HasFilter($"\"{nameof(IEntityAuditDeletedAt.DeletedAt)}\" IS NULL");
     }
 }

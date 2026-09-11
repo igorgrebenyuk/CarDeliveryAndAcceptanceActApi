@@ -1,4 +1,4 @@
-﻿using FinalExercise.Dal.Contracts.Interfaces;
+﻿using CarDeliveryAndAcceptance.Dal.Contracts.Interfaces;
 
 namespace CarDeliveryAndAcceptance.Dal.Contracts.Repositories;
 
