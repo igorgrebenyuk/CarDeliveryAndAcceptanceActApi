@@ -18,7 +18,8 @@ namespace CarDelivery_AcceptanceActApi
             // Configure the HTTP request pipeline.
             if (app.Environment.IsDevelopment())
             {
-                app.MapOpenApi();
+                app.MapOpenApi("swagger/Car");
+                app.UseSwaggerUI(options => options.SwaggerEndpoint("Car", "CarDelivery&AcceptanceActApi"));
             }
 
             app.UseHttpsRedirection();
