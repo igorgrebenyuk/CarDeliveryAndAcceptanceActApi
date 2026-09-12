@@ -1,11 +1,12 @@
 ﻿using CarDeliveryAndAcceptance.Dal.Contracts;
 
-namespace CarDeliveryAndAcceptance.Entities
-{
+namespace CarDeliveryAndAcceptance.Entities;
+
+    /// <summary>
+    /// Представляет сущность автомобиля
+    /// </summary>
     public class Car : BaseAuditEntity
     {
-       
-       
         /// <summary>
         /// Марка
         /// </summary>
@@ -55,4 +56,4 @@ namespace CarDeliveryAndAcceptance.Entities
 
         
     }
-}
+

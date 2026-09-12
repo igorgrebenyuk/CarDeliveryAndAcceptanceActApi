@@ -2,6 +2,9 @@
 
 namespace CarDeliveryAndAcceptance.Entities;
 
+/// <summary>
+/// Представляет сущность города
+/// </summary>
 public class City : BaseAuditEntity
 {
     

@@ -18,19 +18,19 @@ public class BuyerConfiguration :  IEntityTypeConfiguration<Buyer>
         builder.CreateAuditConfiguration();
         builder.UpdateAuditConfiguration();
 
-        builder.Property(x => x.BuyerName)
+        builder.Property(x => x.Name)
             .IsRequired()
             .HasMaxLength(150);
         
-        builder.Property(x => x.BuyerFirstName)
+        builder.Property(x => x.FirstName)
             .IsRequired()
             .HasMaxLength(100);
 
-        builder.Property(x => x.BuyerSurname)
+        builder.Property(x => x.Surname)
             .IsRequired()
             .HasMaxLength(50);
 
-        builder.HasIndex(x => new { x.BuyerName, x.BuyerFirstName, x.BuyerSurname })
+        builder.HasIndex(x => new { x.Name, x.FirstName, x.Surname })
             .HasDatabaseName("IX_Buyers_FullName")
             .IsUnique()
             .HasFilter($"\"{nameof(IEntityAuditDeletedAt.DeletedAt)}\" IS NULL");

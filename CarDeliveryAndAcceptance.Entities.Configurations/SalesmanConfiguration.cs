@@ -18,19 +18,19 @@ public class SalesmanConfiguration:  IEntityTypeConfiguration<Salesman>
         builder.CreateAuditConfiguration();
         builder.UpdateAuditConfiguration();
         
-        builder.Property(x => x.SalesmanName)
+        builder.Property(x => x.Name)
             .IsRequired()
             .HasMaxLength(150);
         
-        builder.Property(x => x.SalesmanFirstName)
+        builder.Property(x => x.FirstName)
             .IsRequired()
             .HasMaxLength(100);
 
-        builder.Property(x => x.SalesmanSurname)
+        builder.Property(x => x.Surname)
             .IsRequired()
             .HasMaxLength(50);
         
-        builder.HasIndex(x => new { x.SalesmanName, x.SalesmanFirstName, x.SalesmanSurname })
+        builder.HasIndex(x => new { x.Name, x.FirstName, x.Surname })
             .HasDatabaseName("IX_Salesmen_FullName")
             .IsUnique()
             .HasFilter($"\"{nameof(IEntityAuditDeletedAt.DeletedAt)}\" IS NULL");

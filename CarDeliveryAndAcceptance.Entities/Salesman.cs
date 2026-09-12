@@ -1,7 +1,7 @@
 ﻿using CarDeliveryAndAcceptance.Dal.Contracts;
 
-namespace CarDeliveryAndAcceptance.Entities
-{
+namespace CarDeliveryAndAcceptance.Entities;
+
     /// <summary>
     /// Сущность  представляющая продавца
     /// </summary>
@@ -11,16 +11,16 @@ namespace CarDeliveryAndAcceptance.Entities
         /// <summary>
         /// Название продавца
         /// </summary>
-        public string SalesmanName { get; set; } = string.Empty;
+        public string Name { get; set; } = string.Empty;
 
         /// <summary>
         /// Имя продавца
         /// </summary>
-        public string SalesmanFirstName { get; set; } = string.Empty;
+        public string FirstName { get; set; } = string.Empty;
 
         /// <summary>
         /// Фамилия продавца
         /// </summary>
-        public string SalesmanSurname { get; set; } = string.Empty;
+        public string Surname { get; set; } = string.Empty;
     }
-}
+

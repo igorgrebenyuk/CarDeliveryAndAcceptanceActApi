@@ -44,7 +44,7 @@ public class AcceptanceActConfiguration :  IEntityTypeConfiguration<AcceptanceAc
             .IsRequired()
             .OnDelete(DeleteBehavior.Restrict);
         
-        builder.HasIndex(x => new { x.CarId, x.BuyerId, x.SalesmanId, x.DateOfCreation })
+        builder.HasIndex(x => new { x.CarId, x.BuyerId, x.SalesmanId })
             .HasDatabaseName("IX_AcceptanceActs")
             .IsUnique()
             .HasFilter($"\"{nameof(IEntityAuditDeletedAt.DeletedAt)}\" IS NULL");
