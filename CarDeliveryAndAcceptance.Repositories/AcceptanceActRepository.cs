@@ -6,14 +6,16 @@ using Microsoft.EntityFrameworkCore;
 
 namespace CarDeliveryAndAcceptance.Repositories;
 
-public class AcceptanceActRepository : IAcceptanceActRepository
+
+public class AcceptanceActRepository : BaseWriteRepository<AcceptanceAct> , IAcceptanceActRepository
 {
     private readonly IReader reader;
     
     /// <summary>
     /// ctor.
     /// </summary>
-    public AcceptanceActRepository(IReader reader)
+    public AcceptanceActRepository(IDbWriterContext writerContext , IReader reader)
+    : base(writerContext)
     {
         this.reader = reader;
     }
@@ -29,7 +31,9 @@ public class AcceptanceActRepository : IAcceptanceActRepository
             .ThenBy(x => x.SalesmanId)
             .ToReadOnlyCollectionAsync(cancellationToken);
     
-
+    /// <summary>
+    /// Получение акта по ID
+    /// </summary>
     Task <AcceptanceAct?> IAcceptanceActRepository.GetAcceptanceActByIdAsync(Guid id, CancellationToken cancellationToken)
         => reader.Read<AcceptanceAct>()
             .NotDeletedAt()

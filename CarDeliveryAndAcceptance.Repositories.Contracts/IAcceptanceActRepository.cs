@@ -8,10 +8,15 @@ namespace CarDeliveryAndAcceptance.Repositories.Contracts;
 public interface IAcceptanceActRepository
 {   
     /// <summary>
-    /// 
+    /// Получение всех актов
     /// </summary>
     Task<IReadOnlyCollection<AcceptanceAct>> GetAcceptanceActsAsync(CancellationToken cancellationToken);
     
     
-    Task<AcceptanceAct> GetAcceptanceActByIdAsync(Guid id , CancellationToken cancellationToken);
+    /// <summary>
+    /// Получение акта по ID
+    /// </summary>
+    Task<AcceptanceAct?> GetAcceptanceActByIdAsync(Guid id , CancellationToken cancellationToken);
+    
+    
 }
