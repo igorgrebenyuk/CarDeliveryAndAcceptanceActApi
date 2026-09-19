@@ -6,7 +6,9 @@ using Microsoft.EntityFrameworkCore;
 
 namespace CarDeliveryAndAcceptance.Repositories;
 
-
+/// <summary>
+/// Репозиторий работы с <see cref="AcceptanceAct"/>>
+/// </summary>
 public class AcceptanceActRepository : BaseWriteRepository<AcceptanceAct> , IAcceptanceActRepository
 {
     private readonly IReader reader;

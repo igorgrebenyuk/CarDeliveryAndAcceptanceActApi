@@ -24,8 +24,4 @@ public interface IBuyerRepository
     Task<Buyer?> GetBuyerByNameAsync(string Name, CancellationToken cancellationToken);
 
 
-    /// <summary>
-    /// Поиск покупателя по имени и фамилии 
-    /// </summary>
-    Task<Buyer?> GetBuyerByFirstNameAndSurnameAsync(string firstName, string surname, CancellationToken cancellationToken);
 }

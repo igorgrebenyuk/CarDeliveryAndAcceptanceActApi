@@ -6,7 +6,9 @@ using Microsoft.EntityFrameworkCore;
 
 namespace CarDeliveryAndAcceptance.Repositories;
 
-
+/// <summary>
+/// Репозиторий работы с <see cref="Car"/>
+/// </summary>
 public class CarRepository : BaseWriteRepository<Car>, ICarRepository
 {
     private readonly IReader reader;
@@ -45,8 +47,7 @@ public class CarRepository : BaseWriteRepository<Car>, ICarRepository
     Task<Car?> ICarRepository.GetCarByVinAsync(string vinCode, CancellationToken cancellationToken)
         => reader.Read<Car>()
             .NotDeletedAt()
-            .Where(x => x.VinCode == vinCode)
-            .FirstOrDefaultAsync(cancellationToken);
+            .FirstOrDefaultAsync(x => x.VinCode == vinCode , cancellationToken);
 
     /// <summary>
     /// Поиск автомобиля по регистрационному знаку
@@ -54,6 +55,5 @@ public class CarRepository : BaseWriteRepository<Car>, ICarRepository
     Task<Car?> ICarRepository.GetCarByLicensePlateAsync(string licensePlate, CancellationToken cancellationToken)
         => reader.Read<Car>()
             .NotDeletedAt()
-            .Where(x => x.LicensePlate == licensePlate)
-            .FirstOrDefaultAsync(cancellationToken);
+            .FirstOrDefaultAsync(x => x.LicensePlate == licensePlate , cancellationToken);
 }

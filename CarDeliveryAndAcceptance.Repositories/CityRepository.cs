@@ -6,7 +6,9 @@ using Microsoft.EntityFrameworkCore;
 
 namespace CarDeliveryAndAcceptance.Repositories;
 
-
+/// <summary>
+/// Репозиторий работы с <see cref="City"/>
+/// </summary>
 public class CityRepository : BaseWriteRepository<City>, ICityRepository
 {
     private readonly IReader reader;
@@ -41,9 +43,8 @@ public class CityRepository : BaseWriteRepository<City>, ICityRepository
     /// <summary>
     /// Поиск города по названию
     /// </summary>
-    Task<City?> ICityRepository.GetCityByNameAsync(string cityName, CancellationToken cancellationToken)
+    Task<City?> ICityRepository.GetCityByNameAsync(string Name, CancellationToken cancellationToken)
         => reader.Read<City>()
             .NotDeletedAt()
-            .Where(x => x.Name == cityName)
-            .FirstOrDefaultAsync(cancellationToken);
+            .FirstOrDefaultAsync(x => x.Name == Name , cancellationToken);
 }

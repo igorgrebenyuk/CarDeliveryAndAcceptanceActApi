@@ -6,7 +6,9 @@ using Microsoft.EntityFrameworkCore;
 
 namespace CarDeliveryAndAcceptance.Repositories;
 
-
+/// <summary>
+/// Репозиторий работы с <see cref="Salesman"/>
+/// </summary>
 public class SalesmanRepository : BaseWriteRepository<Salesman>, ISalesmanRepository
 {
     private readonly IReader reader;
@@ -45,18 +47,5 @@ public class SalesmanRepository : BaseWriteRepository<Salesman>, ISalesmanReposi
     Task<Salesman?> ISalesmanRepository.GetSalesmanByNameAsync( string Name, CancellationToken cancellationToken)
         => reader.Read<Salesman>()
             .NotDeletedAt()
-            .Where(x => x.Name.ToLower() == Name.ToLower())
-            .FirstOrDefaultAsync(cancellationToken);
-    
-    /// <summary>
-    /// Поиск продавца по имени и фамилии
-    /// </summary>
-    Task<Salesman?> ISalesmanRepository.GetSalesmanByFirstNameAndSurnameAsync(
-        string firstName, 
-        string surname, 
-        CancellationToken cancellationToken)
-        => reader.Read<Salesman>()
-            .NotDeletedAt()
-            .Where(x => x.FirstName.ToLower() == firstName.ToLower() && x.Surname.ToLower() == surname.ToLower())
-            .FirstOrDefaultAsync(cancellationToken);
+            .FirstOrDefaultAsync(x => x.Name.ToLower() == Name.ToLower() , cancellationToken);
 }

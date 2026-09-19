@@ -22,5 +22,5 @@ public interface ICityRepository
     /// <summary>
     /// Поиск города по названию
     /// </summary>
-    Task<City?> GetCityByNameAsync(string cityName, CancellationToken cancellationToken);
+    Task<City?> GetCityByNameAsync(string Name, CancellationToken cancellationToken);
 }

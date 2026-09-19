@@ -24,9 +24,4 @@ public interface ISalesmanRepository
     /// </summary>
     Task<Salesman?> GetSalesmanByNameAsync(string Name, CancellationToken cancellationToken);
 
-
-    /// <summary>
-    /// Поиск продавца по имени и фамилии
-    /// </summary>
-    Task<Salesman?> GetSalesmanByFirstNameAndSurnameAsync(string firstName, string surname, CancellationToken cancellationToken);
 }
