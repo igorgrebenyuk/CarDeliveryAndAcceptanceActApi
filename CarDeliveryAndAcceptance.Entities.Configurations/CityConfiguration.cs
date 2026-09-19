@@ -21,11 +21,11 @@ public class CityConfiguration  : IEntityTypeConfiguration<City>
 
         
         // Настройка названия города
-        builder.Property(x => x.CityName)
+        builder.Property(x => x.Name)
             .IsRequired()
             .HasMaxLength(100);
         
-        builder.HasIndex(x => x.CityName)
+        builder.HasIndex(x => x.Name)
             .HasDatabaseName("IX_Cities_CityName")
             .IsUnique()
             .HasFilter($"\"{nameof(IEntityAuditDeletedAt.DeletedAt)}\" IS NULL");
