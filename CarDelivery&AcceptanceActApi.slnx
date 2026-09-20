@@ -10,5 +10,6 @@
   <Project Path="CarDeliveryAndAcceptance.Entities.Configurations/CarDeliveryAndAcceptance.Entities.Configurations.csproj" />
   <Project Path="CarDeliveryAndAcceptance.Entities/CarDeliveryAndAcceptance.Entities.csproj" />
   <Project Path="CarDeliveryAndAcceptance.Repositories.Contracts/CarDeliveryAndAcceptance.Repositories.Contracts.csproj" />
+  <Project Path="CarDeliveryAndAcceptance.Repositories.Tests/CarDeliveryAndAcceptance.Repositories.Tests.csproj" />
   <Project Path="CarDeliveryAndAcceptance.Repositories/CarDeliveryAndAcceptance.Repositories.csproj" />
 </Solution>
