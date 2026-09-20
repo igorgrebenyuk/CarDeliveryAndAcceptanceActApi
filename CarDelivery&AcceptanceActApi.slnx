@@ -2,6 +2,7 @@
   <Folder Name="/DataAccessLayer/">
     <Project Path="DataAccessLayer/CarDeliveryAndAcceptance.Context.EntityFrameworkCore/CarDeliveryAndAcceptance.Context.EntityFrameworkCore.csproj" />
     <Project Path="DataAccessLayer/CarDeliveryAndAcceptance.Context.Repositories/CarDeliveryAndAcceptance.Context.Repositories.csproj" />
+    <Project Path="DataAccessLayer/CarDeliveryAndAcceptance.Context.Tests/CarDeliveryAndAcceptance.Context.Tests.csproj" />
     <Project Path="DataAccessLayer/CarDeliveryAndAcceptance.Context/CarDeliveryAndAcceptance.Context.csproj" />
     <Project Path="DataAccessLayer/CarDeliveryAndAcceptance.Dal.Contracts/CarDeliveryAndAcceptance.Dal.Contracts.csproj" />
   </Folder>
