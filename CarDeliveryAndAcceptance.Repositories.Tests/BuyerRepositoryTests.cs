@@ -18,7 +18,7 @@ public class BuyerRepositoryTests: CarDeliveryAndAcceptanceContextInMemory
     
     
     /// <summary>
-    /// Инициализирует новый экземпляр тестов репозитория актов 
+    /// Инициализирует новый экземпляр тестов репозитория покупателей 
     /// </summary>
     public BuyerRepositoryTests()
     {
@@ -40,7 +40,7 @@ public class BuyerRepositoryTests: CarDeliveryAndAcceptanceContextInMemory
     }
     
     /// <summary>
-    /// Должен вернуть всех неудаленные акты, если они есть в базе
+    /// Должен вернуть всех неудаленных покупателей, если они есть в базе
     /// </summary>
     [Fact]
     public async Task GetBuyerReturnAllNotDeletedItems()
@@ -62,7 +62,7 @@ public class BuyerRepositoryTests: CarDeliveryAndAcceptanceContextInMemory
     }
     
     /// <summary>
-    /// Возвращает null, если акт помечен как удаленный
+    /// Возвращает null, если покупатель помечен как удаленный
     /// </summary>
     [Fact]
     public async Task GetBuyerByIdShouldReturnNullWhenEntityIsDeleted()
@@ -70,7 +70,7 @@ public class BuyerRepositoryTests: CarDeliveryAndAcceptanceContextInMemory
         // Arrange
         var deletedBuyer = TestEntityProvider.Shared.Create<Buyer>(x => x.DeletedAt = DateTimeOffset.UtcNow);
         await Context.AddAsync(deletedBuyer);
-        await Context.SaveChangesAsync(CancellationToken.None);
+        await UnitOfWork.SaveChangesAsync(CancellationToken.None);
 
         // Act
         var result = await repository.GetBuyerByIdAsync(deletedBuyer.Id, CancellationToken.None);
@@ -80,7 +80,7 @@ public class BuyerRepositoryTests: CarDeliveryAndAcceptanceContextInMemory
     }
     
     /// <summary>
-    /// Не должен возвращать акты, помеченные как удаленные
+    /// Не должен возвращать покупателей, помеченных как удаленные
     /// </summary>
     [Fact]
     public async Task GetBuyersShouldNotReturnDeletedItems()
@@ -101,7 +101,7 @@ public class BuyerRepositoryTests: CarDeliveryAndAcceptanceContextInMemory
     }
     
     /// <summary>
-    /// Возвращает акт по идентификатору, если он существует и не удален
+    /// Возвращает покупателя по идентификатору, если он существует и не удален
     /// </summary>
     [Fact]
     public async Task GetBuyerByIdShouldReturnEntityWhenExistsAndNotDeleted()
@@ -120,7 +120,7 @@ public class BuyerRepositoryTests: CarDeliveryAndAcceptanceContextInMemory
     }
 
     /// <summary>
-    /// Возвращает null, если акт с указанным идентификатором не найден
+    /// Возвращает null, если покупатель с указанным идентификатором не найден
     /// </summary>
     [Fact]
     public async Task GetBuyerByIdShouldReturnNullWhenEntityDoesNotExist()
@@ -133,5 +133,87 @@ public class BuyerRepositoryTests: CarDeliveryAndAcceptanceContextInMemory
 
         // Assert
         result.Should().BeNull();
+    }
+    
+    
+    /// <summary>
+    /// Возвращает покупателя по имени , если он существует и не удален
+    /// </summary>
+    [Fact]
+    public async Task GetBuyerByNameShouldReturnThisBuyerWhenExistsAndNotDeleted()
+    {
+        // Arrange
+        // 1. Целевой покупатель
+        var targetBuyer = TestEntityProvider.Shared.Create<Buyer>(settings: x => {
+            x.DeletedAt = null;
+            x.Name = "000 Спартак";
+        });
+
+        // 2. ПОКУПАТЕЛЬ-ШУМ: Тот же Спартак, но УДАЛЕННЫЙ 
+        var deletedBuyer = TestEntityProvider.Shared.Create<Buyer>(settings: x => {
+            x.DeletedAt = DateTimeOffset.UtcNow; 
+            x.Name = "000 Спартак";
+        });
+
+        // 3. ПОКУПАТЕЛЬ-ШУМ: Другое имя 
+        var otherBuyer = TestEntityProvider.Shared.Create<Buyer>(settings: x => {
+            x.DeletedAt = null;
+            x.Name = "ООО ЦСКА";
+        });
+
+        await Context.AddRangeAsync(targetBuyer , deletedBuyer , otherBuyer);
+        await UnitOfWork.SaveChangesAsync(CancellationToken.None);
+
+        // Act
+        var result = await repository.GetBuyerByNameAsync(targetBuyer.Name, CancellationToken.None);
+
+        // Assert
+        result.Should().NotBeNull();
+        result.Id.Should().Be(targetBuyer.Id); 
+        result.DeletedAt.Should().BeNull();
+    }
+    
+    /// <summary>
+    /// Возвращает null, если покупатель с указанным именем не найден
+    /// </summary>
+    [Fact]
+    public async Task GetBuyerByNameShouldReturnNullWhenEntityDoesNotExist()
+    {
+        // Arrange
+        var otherBuyer = TestEntityProvider.Shared.Create<Buyer>(x => {
+            x.DeletedAt = null;
+            x.Name = "ООО ЦСКА";
+        });
+        await Context.AddAsync(otherBuyer);
+        await UnitOfWork.SaveChangesAsync(CancellationToken.None);
+
+        // Act
+        var result = await repository.GetBuyerByNameAsync("000 Спартак", CancellationToken.None);
+
+        // Assert
+        result.Should().BeNull();
+    }
+    
+    
+    /// <summary>
+    /// Должен возвращать покупателя независимо от регистра символов в имени
+    /// </summary>
+    [Fact]
+    public async Task GetBuyerByNameShouldBeCaseInsensitive()
+    {
+        // Arrange
+        var targetBuyer = TestEntityProvider.Shared.Create<Buyer>(x => {
+            x.DeletedAt = null;
+            x.Name = "ООО Спартак";
+        });
+        await Context.AddAsync(targetBuyer);
+        await UnitOfWork.SaveChangesAsync(CancellationToken.None);
+
+        // Act
+        var result = await repository.GetBuyerByNameAsync("ооо спартак", CancellationToken.None);
+
+        // Assert
+        result.Should().NotBeNull();
+        result!.Id.Should().Be(targetBuyer.Id);
     }
 }
