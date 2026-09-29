@@ -7,7 +7,11 @@
     </PropertyGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\..\CarDeliveryAndAcceptance.Common\CarDeliveryAndAcceptance.Common.csproj" />
+      <PackageReference Include="Microsoft.EntityFrameworkCore" Version="10.0.9" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\CarDeliveryAndAcceptance.Dal.Contracts\CarDeliveryAndAcceptance.Dal.Contracts.csproj" />
     </ItemGroup>
 
 </Project>

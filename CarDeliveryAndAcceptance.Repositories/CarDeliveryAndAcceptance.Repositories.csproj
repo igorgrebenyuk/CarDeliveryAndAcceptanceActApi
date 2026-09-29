@@ -10,4 +10,9 @@
       <PackageReference Include="Microsoft.EntityFrameworkCore" Version="10.0.9" />
     </ItemGroup>
 
+    <ItemGroup>
+      <ProjectReference Include="..\CarDeliveryAndAcceptance.Repositories.Contracts\CarDeliveryAndAcceptance.Repositories.Contracts.csproj" />
+      <ProjectReference Include="..\DataAccessLayer\CarDeliveryAndAcceptance.Context.Repositories\CarDeliveryAndAcceptance.Context.Repositories.csproj" />
+    </ItemGroup>
+
 </Project>
