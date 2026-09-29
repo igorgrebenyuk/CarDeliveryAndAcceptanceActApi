@@ -46,5 +46,5 @@ public class CityRepository : BaseWriteRepository<City>, ICityRepository
     Task<City?> ICityRepository.GetCityByNameAsync(string Name, CancellationToken cancellationToken)
         => reader.Read<City>()
             .NotDeletedAt()
-            .FirstOrDefaultAsync(x => x.Name == Name , cancellationToken);
+            .FirstOrDefaultAsync(x => x.Name.ToLower() == Name.ToLower() , cancellationToken);
 }

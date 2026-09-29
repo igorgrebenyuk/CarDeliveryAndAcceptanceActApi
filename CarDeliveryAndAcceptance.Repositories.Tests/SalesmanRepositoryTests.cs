@@ -5,20 +5,17 @@ using CarDeliveryAndAcceptance.Context.Tests;
 using CarDeliveryAndAcceptance.Repositories.Contracts;
 using CarDeliveryAndAcceptance.Entities;
 
-
 namespace CarDeliveryAndAcceptance.Repositories.Tests;
 
 /// <summary>
 /// Тесты для <see cref="SalesmanRepository"/>
 /// </summary>
-public class SalesmanRepositoryTests: CarDeliveryAndAcceptanceContextInMemory
+public class SalesmanRepositoryTests : CarDeliveryAndAcceptanceContextInMemory
 {
     private readonly ISalesmanRepository repository;
     
-    
-    
     /// <summary>
-    /// Инициализирует новый экземпляр тестов репозитория актов 
+    /// Инициализирует новый экземпляр тестов репозитория продавцов 
     /// </summary>
     public SalesmanRepositoryTests()
     {
@@ -26,7 +23,7 @@ public class SalesmanRepositoryTests: CarDeliveryAndAcceptanceContextInMemory
     }
     
     /// <summary>
-    /// Должен вернуть пустую коллекцию если в базе нет продавцов
+    /// Должен вернуть пустую коллекцию, если в базе нет продавцов
     /// </summary>
     [Fact]
     public async Task GetSalesmansShouldReturnEmpty()
@@ -36,12 +33,10 @@ public class SalesmanRepositoryTests: CarDeliveryAndAcceptanceContextInMemory
 
         // Assert
         items.Should().NotBeNull().And.BeEmpty();
-        
     }
     
-    
     /// <summary>
-    /// Должен вернуть всех неудаленные акты, если они есть в базе
+    /// Должен вернуть всех неудаленных продавцов, если они есть в базе
     /// </summary>
     [Fact]
     public async Task GetSalesmanReturnAllNotDeletedItems()
@@ -63,7 +58,7 @@ public class SalesmanRepositoryTests: CarDeliveryAndAcceptanceContextInMemory
     }
     
     /// <summary>
-    /// Возвращает null, если акт помечен как удаленный
+    /// Возвращает null, если продавец помечен как удаленный
     /// </summary>
     [Fact]
     public async Task GetSalesmanByIdShouldReturnNullWhenEntityIsDeleted()
@@ -71,7 +66,7 @@ public class SalesmanRepositoryTests: CarDeliveryAndAcceptanceContextInMemory
         // Arrange
         var deletedSalesman = TestEntityProvider.Shared.Create<Salesman>(x => x.DeletedAt = DateTimeOffset.UtcNow);
         await Context.AddAsync(deletedSalesman);
-        await Context.SaveChangesAsync(CancellationToken.None);
+        await UnitOfWork.SaveChangesAsync(CancellationToken.None);
 
         // Act
         var result = await repository.GetSalesmanByIdAsync(deletedSalesman.Id, CancellationToken.None);
@@ -81,7 +76,7 @@ public class SalesmanRepositoryTests: CarDeliveryAndAcceptanceContextInMemory
     }
     
     /// <summary>
-    /// Не должен возвращать акты, помеченные как удаленные
+    /// Не должен возвращать продавцов, помеченных как удаленные
     /// </summary>
     [Fact]
     public async Task GetSalesmansShouldNotReturnDeletedItems()
@@ -102,7 +97,7 @@ public class SalesmanRepositoryTests: CarDeliveryAndAcceptanceContextInMemory
     }
     
     /// <summary>
-    /// Возвращает акт по идентификатору, если он существует и не удален
+    /// Возвращает продавца по идентификатору, если он существует и не удален
     /// </summary>
     [Fact]
     public async Task GetSalesmanByIdShouldReturnEntityWhenExistsAndNotDeleted()
@@ -121,7 +116,7 @@ public class SalesmanRepositoryTests: CarDeliveryAndAcceptanceContextInMemory
     }
 
     /// <summary>
-    /// Возвращает null, если акт с указанным идентификатором не найден
+    /// Возвращает null, если продавец с указанным идентификатором не найден
     /// </summary>
     [Fact]
     public async Task GetSalesmanByIdShouldReturnNullWhenEntityDoesNotExist()
@@ -134,5 +129,86 @@ public class SalesmanRepositoryTests: CarDeliveryAndAcceptanceContextInMemory
 
         // Assert
         result.Should().BeNull();
+    }
+    
+    /// <summary>
+    /// Возвращает продавца по имени, если он существует и не удален
+    /// </summary>
+    [Fact]
+    public async Task GetSalesmanByNameShouldReturnThisSalesmanWhenExistsAndNotDeleted()
+    {
+        // Arrange
+        // 1. Целевой продавец
+        var targetSalesman = TestEntityProvider.Shared.Create<Salesman>(settings: x => {
+            x.DeletedAt = null;
+            x.Name = "000 Спартак";
+        });
+
+        // 2. ПРОДАВЕЦ-ШУМ: Тот же Спартак, но удаленный 
+        var deletedSalesman = TestEntityProvider.Shared.Create<Salesman>(settings: x => {
+            x.DeletedAt = DateTimeOffset.UtcNow; 
+            x.Name = "000 Спартак";
+        });
+
+        // 3. ПРОДАВЕЦ-ШУМ: Другое имя 
+        var otherSalesman = TestEntityProvider.Shared.Create<Salesman>(settings: x => {
+            x.DeletedAt = null;
+            x.Name = "ООО ЦСКА";
+        });
+
+        await Context.AddRangeAsync(targetSalesman, deletedSalesman, otherSalesman);
+        await UnitOfWork.SaveChangesAsync(CancellationToken.None);
+
+        // Act
+        var result = await repository.GetSalesmanByNameAsync(targetSalesman.Name, CancellationToken.None);
+
+        // Assert
+        result.Should().NotBeNull();
+        result.Id.Should().Be(targetSalesman.Id); 
+        result.DeletedAt.Should().BeNull();
+    }
+    
+    /// <summary>
+    /// Возвращает null, если продавец с указанным именем не найден
+    /// </summary>
+    [Fact]
+    public async Task GetSalesmanByNameShouldReturnNullWhenEntityDoesNotExist()
+    {
+        // Arrange
+        var otherSalesman = TestEntityProvider.Shared.Create<Salesman>(x => {
+            x.DeletedAt = null;
+            x.Name = "ООО ЦСКА";
+        });
+        await Context.AddAsync(otherSalesman);
+        await UnitOfWork.SaveChangesAsync(CancellationToken.None);
+
+        // Act
+        var result = await repository.GetSalesmanByNameAsync("000 Спартак", CancellationToken.None);
+
+        // Assert
+        result.Should().BeNull();
+    }
+
+    /// <summary>
+    /// Должен возвращать продавца независимо от регистра символов в имени
+    /// </summary>
+    [Fact]
+    public async Task GetSalesmanByNameShouldBeCaseInsensitive()
+    {
+        // Arrange
+        var targetSalesman = TestEntityProvider.Shared.Create<Salesman>(x =>
+        {
+            x.DeletedAt = null;
+            x.Name = "ООО Спартак";
+        });
+        await Context.AddAsync(targetSalesman);
+        await UnitOfWork.SaveChangesAsync(CancellationToken.None);
+
+        // Act
+        var result = await repository.GetSalesmanByNameAsync("ооо спартак", CancellationToken.None);
+
+        // Assert
+        result.Should().NotBeNull();
+        result!.Id.Should().Be(targetSalesman.Id);
     }
 }

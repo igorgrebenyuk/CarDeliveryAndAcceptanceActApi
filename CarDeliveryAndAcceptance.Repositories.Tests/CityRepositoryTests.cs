@@ -5,20 +5,17 @@ using CarDeliveryAndAcceptance.Context.Tests;
 using CarDeliveryAndAcceptance.Repositories.Contracts;
 using CarDeliveryAndAcceptance.Entities;
 
-
 namespace CarDeliveryAndAcceptance.Repositories.Tests;
 
 /// <summary>
 /// Тесты для <see cref="CityRepository"/>
 /// </summary>
-public class CityRepositoryTests: CarDeliveryAndAcceptanceContextInMemory
+public class CityRepositoryTests : CarDeliveryAndAcceptanceContextInMemory
 {
     private readonly ICityRepository repository;
     
-    
-    
     /// <summary>
-    /// Инициализирует новый экземпляр тестов репозитория актов 
+    /// Инициализирует новый экземпляр тестов репозитория городов 
     /// </summary>
     public CityRepositoryTests()
     {
@@ -26,7 +23,7 @@ public class CityRepositoryTests: CarDeliveryAndAcceptanceContextInMemory
     }
     
     /// <summary>
-    /// Должен вернуть пустую коллекцию если в базе нет городов
+    /// Должен вернуть пустую коллекцию, если в базе нет городов
     /// </summary>
     [Fact]
     public async Task GetCitiesShouldReturnEmpty()
@@ -36,12 +33,10 @@ public class CityRepositoryTests: CarDeliveryAndAcceptanceContextInMemory
 
         // Assert
         items.Should().NotBeNull().And.BeEmpty();
-        
     }
     
-    
     /// <summary>
-    /// Должен вернуть всех неудаленные акты, если они есть в базе
+    /// Должен вернуть все неудаленные города, если они есть в базе
     /// </summary>
     [Fact]
     public async Task GetCityReturnAllNotDeletedItems()
@@ -63,7 +58,7 @@ public class CityRepositoryTests: CarDeliveryAndAcceptanceContextInMemory
     }
     
     /// <summary>
-    /// Возвращает null, если акт помечен как удаленный
+    /// Возвращает null, если город помечен как удаленный
     /// </summary>
     [Fact]
     public async Task GetCityByIdShouldReturnNullWhenEntityIsDeleted()
@@ -71,7 +66,7 @@ public class CityRepositoryTests: CarDeliveryAndAcceptanceContextInMemory
         // Arrange
         var deletedCity = TestEntityProvider.Shared.Create<City>(x => x.DeletedAt = DateTimeOffset.UtcNow);
         await Context.AddAsync(deletedCity);
-        await Context.SaveChangesAsync(CancellationToken.None);
+        await UnitOfWork.SaveChangesAsync(CancellationToken.None); // Исправлено на UnitOfWork
 
         // Act
         var result = await repository.GetCityByIdAsync(deletedCity.Id, CancellationToken.None);
@@ -81,7 +76,7 @@ public class CityRepositoryTests: CarDeliveryAndAcceptanceContextInMemory
     }
     
     /// <summary>
-    /// Не должен возвращать акты, помеченные как удаленные
+    /// Не должен возвращать города, помеченные как удаленные
     /// </summary>
     [Fact]
     public async Task GetCitiesShouldNotReturnDeletedItems()
@@ -102,7 +97,7 @@ public class CityRepositoryTests: CarDeliveryAndAcceptanceContextInMemory
     }
     
     /// <summary>
-    /// Возвращает акт по идентификатору, если он существует и не удален
+    /// Возвращает город по идентификатору, если он существует и не удален
     /// </summary>
     [Fact]
     public async Task GetCityByIdShouldReturnEntityWhenExistsAndNotDeleted()
@@ -121,7 +116,7 @@ public class CityRepositoryTests: CarDeliveryAndAcceptanceContextInMemory
     }
 
     /// <summary>
-    /// Возвращает null, если акт с указанным идентификатором не найден
+    /// Возвращает null, если город с указанным идентификатором не найден
     /// </summary>
     [Fact]
     public async Task GetCityByIdShouldReturnNullWhenEntityDoesNotExist()
@@ -134,5 +129,85 @@ public class CityRepositoryTests: CarDeliveryAndAcceptanceContextInMemory
 
         // Assert
         result.Should().BeNull();
+    }
+    
+    /// <summary>
+    /// Возвращает город по названию, если он существует и не удален
+    /// </summary>
+    [Fact]
+    public async Task GetCityByNameShouldReturnThisCityWhenExistsAndNotDeleted()
+    {
+        // Arrange
+        // 1. Целевой город
+        var targetCity = TestEntityProvider.Shared.Create<City>(settings: x => {
+            x.DeletedAt = null;
+            x.Name = "Москва";
+        });
+
+        // 2. ГОРОД-ШУМ: То же название, но удаленный 
+        var deletedCity = TestEntityProvider.Shared.Create<City>(settings: x => {
+            x.DeletedAt = DateTimeOffset.UtcNow; 
+            x.Name = "Москва";
+        });
+
+        // 3. ГОРОД-ШУМ: Другое название 
+        var otherCity = TestEntityProvider.Shared.Create<City>(settings: x => {
+            x.DeletedAt = null;
+            x.Name = "Санкт-Петербург";
+        });
+        
+        await Context.AddRangeAsync(targetCity, deletedCity, otherCity);
+        await UnitOfWork.SaveChangesAsync(CancellationToken.None);
+        
+        // Act
+        var result = await repository.GetCityByNameAsync(targetCity.Name, CancellationToken.None);
+        
+        // Assert
+        result.Should().NotBeNull();
+        result.Id.Should().Be(targetCity.Id); 
+        result.DeletedAt.Should().BeNull();
+    }
+    
+    /// <summary>
+    /// Возвращает null, если город с указанным названием не найден
+    /// </summary>
+    [Fact]
+    public async Task GetCityByNameShouldReturnNullWhenEntityDoesNotExist()
+    {
+        // Arrange
+        var otherCity = TestEntityProvider.Shared.Create<City>(x => {
+            x.DeletedAt = null;
+            x.Name = "Санкт-Петербург";
+        });
+        await Context.AddAsync(otherCity);
+        await UnitOfWork.SaveChangesAsync(CancellationToken.None);
+
+        // Act
+        var result = await repository.GetCityByNameAsync("Москва", CancellationToken.None);
+
+        // Assert
+        result.Should().BeNull();
+    }
+    
+    /// <summary>
+    /// Должен возвращать город независимо от регистра символов в названии
+    /// </summary>
+    [Fact]
+    public async Task GetCityByNameShouldBeCaseInsensitive()
+    {
+        // Arrange
+        var targetCity = TestEntityProvider.Shared.Create<City>(x => {
+            x.DeletedAt = null;
+            x.Name = "Санкт-Петербург";
+        });
+        await Context.AddAsync(targetCity);
+        await UnitOfWork.SaveChangesAsync(CancellationToken.None);
+
+        // Act
+        var result = await repository.GetCityByNameAsync("санкт-петербург", CancellationToken.None);
+
+        // Assert
+        result.Should().NotBeNull();
+        result!.Id.Should().Be(targetCity.Id);
     }
 }

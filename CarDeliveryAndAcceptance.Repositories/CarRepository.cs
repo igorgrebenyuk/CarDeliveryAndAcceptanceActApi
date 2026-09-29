@@ -44,10 +44,10 @@ public class CarRepository : BaseWriteRepository<Car>, ICarRepository
     /// <summary>
     /// Поиск автомобиля по VIN-коду
     /// </summary>
-    Task<Car?> ICarRepository.GetCarByVinAsync(string vinCode, CancellationToken cancellationToken)
+    Task<Car?> ICarRepository.GetCarByVinCodeAsync(string vinCode, CancellationToken cancellationToken)
         => reader.Read<Car>()
             .NotDeletedAt()
-            .FirstOrDefaultAsync(x => x.VinCode == vinCode , cancellationToken);
+            .FirstOrDefaultAsync(x => x.VinCode.ToLower() == vinCode.ToLower() , cancellationToken);
 
     /// <summary>
     /// Поиск автомобиля по регистрационному знаку
@@ -55,5 +55,5 @@ public class CarRepository : BaseWriteRepository<Car>, ICarRepository
     Task<Car?> ICarRepository.GetCarByLicensePlateAsync(string licensePlate, CancellationToken cancellationToken)
         => reader.Read<Car>()
             .NotDeletedAt()
-            .FirstOrDefaultAsync(x => x.LicensePlate == licensePlate , cancellationToken);
+            .FirstOrDefaultAsync(x => x.LicensePlate.ToLower() == licensePlate.ToLower() , cancellationToken);
 }
