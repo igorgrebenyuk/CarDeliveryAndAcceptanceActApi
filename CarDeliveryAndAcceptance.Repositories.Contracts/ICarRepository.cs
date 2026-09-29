@@ -22,7 +22,7 @@ public interface ICarRepository
     /// <summary>
     /// Поиск автомобиля по VIN-коду
     /// </summary>
-    Task<Car?> GetCarByVinAsync(string vinCode, CancellationToken cancellationToken);
+    Task<Car?> GetCarByVinCodeAsync(string vinCode, CancellationToken cancellationToken);
 
 
     /// <summary>
