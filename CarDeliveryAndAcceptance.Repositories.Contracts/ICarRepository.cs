@@ -1,11 +1,12 @@
-﻿using CarDeliveryAndAcceptance.Entities;
+﻿using CarDeliveryAndAcceptance.Dal.Contracts.Repositories;
+using CarDeliveryAndAcceptance.Entities;
 
 namespace CarDeliveryAndAcceptance.Repositories.Contracts;
 
 /// <summary>
 /// Репозиторий работы с <see cref="Car"/>
 /// </summary>
-public interface ICarRepository
+public interface ICarRepository : IBaseWriteRepository<Car>
 {
     /// <summary>
     /// Получение всех автомобилей

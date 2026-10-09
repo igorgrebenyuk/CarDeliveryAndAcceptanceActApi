@@ -1,11 +1,12 @@
-﻿using CarDeliveryAndAcceptance.Entities;
+﻿using CarDeliveryAndAcceptance.Dal.Contracts.Repositories;
+using CarDeliveryAndAcceptance.Entities;
 
 namespace CarDeliveryAndAcceptance.Repositories.Contracts;
 
 /// <summary>
 /// Репозиторий работы с <see cref="AcceptanceAct"/>>
 /// </summary>
-public interface IAcceptanceActRepository
+public interface IAcceptanceActRepository: IBaseWriteRepository<AcceptanceAct>
 {   
     /// <summary>
     /// Получение всех актов
