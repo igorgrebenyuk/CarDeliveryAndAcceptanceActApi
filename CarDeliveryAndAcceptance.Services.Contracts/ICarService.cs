@@ -1,4 +1,5 @@
 ﻿using CarDeliveryAndAcceptance.Services.Contracts.Models;
+using CarDeliveryAndAcceptance.Services.Contracts.Models.Car;
 
 namespace CarDeliveryAndAcceptance.Services.Contracts;
 
@@ -26,4 +27,20 @@ public interface ICarService
     /// Поиск автомобиля по регистрационному знаку
     /// </summary>
     Task<CarModel?> GetCarByLicensePlateAsync(string licensePlate, CancellationToken cancellationToken);
+    
+    
+    /// <summary>
+    ///Добавление автомобиля
+    /// </summary>
+    Task CreateCarAsync(CarCreateModel buyerCreateModel, CancellationToken cancellationToken);
+
+    /// <summary>
+    ///Обновление автомобиля
+    /// </summary>
+    Task UpdateCarAsync(CarModel buyerModel, CancellationToken cancellationToken);
+
+    /// <summary>
+    ///Удаление автомобиля
+    /// </summary>
+    Task DeleteCarAsync(Guid id, CancellationToken cancellationToken);
 }

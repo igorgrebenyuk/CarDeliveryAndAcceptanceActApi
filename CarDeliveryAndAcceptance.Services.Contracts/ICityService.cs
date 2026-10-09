@@ -1,4 +1,5 @@
 ﻿using CarDeliveryAndAcceptance.Services.Contracts.Models;
+using CarDeliveryAndAcceptance.Services.Contracts.Models.City;
 
 namespace CarDeliveryAndAcceptance.Services.Contracts;
 
@@ -20,4 +21,19 @@ public interface ICityService
     /// Поиск города по названию
     /// </summary>
     Task<CityModel?> GetCityByNameAsync(string Name, CancellationToken cancellationToken);
+    
+    /// <summary>
+    ///Добавление города
+    /// </summary>
+    Task CreateCityAsync(CityCreateModel cityCreateModel, CancellationToken cancellationToken);
+
+    /// <summary>
+    ///Обновление города
+    /// </summary>
+    Task UpdateCityAsync(CityModel cityModel, CancellationToken cancellationToken);
+
+    /// <summary>
+    ///Удаление города
+    /// </summary>
+    Task DeleteCityAsync(Guid id, CancellationToken cancellationToken);
 }

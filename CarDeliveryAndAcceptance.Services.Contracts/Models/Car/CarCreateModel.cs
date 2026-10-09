@@ -1,11 +1,7 @@
-﻿namespace CarDeliveryAndAcceptance.Services.Contracts.Models;
+﻿namespace CarDeliveryAndAcceptance.Services.Contracts.Models.Car;
 
-public class CarModel
+public class CarCreateModel
 {
-    /// <summary>
-    /// Идентификатор
-    /// </summary>
-    public Guid Id { get; set; }
     
     /// <summary>
     /// Марка

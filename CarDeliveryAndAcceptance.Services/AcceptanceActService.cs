@@ -2,6 +2,7 @@
 using CarDeliveryAndAcceptance.Repositories.Contracts;
 using CarDeliveryAndAcceptance.Services.Contracts;
 using CarDeliveryAndAcceptance.Services.Contracts.Models;
+using CarDeliveryAndAcceptance.Services.Contracts.Models.AcceptanceAct;
 
 namespace CarDeliveryAndAcceptance.Services;
 
@@ -23,9 +24,11 @@ public class AcceptanceActService : IAcceptanceActService
         return mapper.Map<IReadOnlyCollection<AcceptanceActModel>>(result);
     }
 
-    async Task<AcceptanceActModel?> IAcceptanceActService.GetAcceptanceActByIdAsync(Guid id, CancellationToken cancellationToken)
+    async Task<AcceptanceActModel> IAcceptanceActService.GetAcceptanceActByIdAsync(Guid id, CancellationToken cancellationToken)
     {
         var result = await acceptanceActRepository.GetAcceptanceActByIdAsync(id, cancellationToken);
         return mapper.Map<AcceptanceActModel>(result);
     }
+    
+    
 }

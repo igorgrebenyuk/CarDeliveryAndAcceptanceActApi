@@ -1,12 +1,7 @@
-﻿namespace CarDeliveryAndAcceptance.Services.Contracts.Models;
+﻿namespace CarDeliveryAndAcceptance.Services.Contracts.Models.Salesman;
 
-public class SalesmanModel
+public class SalesmanCreateModel
 {
-    /// <summary>
-    /// Идентификатор
-    /// </summary>
-    public Guid Id { get; set; }
-    
     /// <summary>
     /// Название продавца
     /// </summary>

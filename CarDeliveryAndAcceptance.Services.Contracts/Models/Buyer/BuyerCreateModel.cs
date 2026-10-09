@@ -1,15 +1,7 @@
-﻿namespace CarDeliveryAndAcceptance.Services.Contracts.Models;
+﻿namespace CarDeliveryAndAcceptance.Services.Contracts.Models.Buyer;
 
-/// <summary>
-/// Представляет модель покупателя
-/// </summary>
-public class BuyerModel
+public class BuyerCreateModel
 {
-    /// <summary>
-    /// Идентификатор
-    /// </summary>
-    public Guid Id { get; set; }
-    
     /// <summary>
     /// Название покупателя
     /// </summary>
