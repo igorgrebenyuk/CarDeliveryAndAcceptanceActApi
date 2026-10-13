@@ -23,7 +23,7 @@ public interface IAcceptanceActService
     /// <summary>
     ///Обновление акта
     /// </summary>
-    Task UpdateAcceptanceActAsync(AcceptanceActModel acceptanceActModel, CancellationToken cancellationToken);
+    Task UpdateAcceptanceActAsync(AcceptanceActUpdateModel acceptanceActModel, CancellationToken cancellationToken);
 
     /// <summary>
     ///Удаление акта

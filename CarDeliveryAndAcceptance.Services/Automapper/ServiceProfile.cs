@@ -1,6 +1,5 @@
 ﻿using AutoMapper;
 using CarDeliveryAndAcceptance.Entities;
-using CarDeliveryAndAcceptance.Services.Contracts.Models;
 using CarDeliveryAndAcceptance.Services.Contracts.Models.AcceptanceAct;
 using CarDeliveryAndAcceptance.Services.Contracts.Models.Buyer;
 using CarDeliveryAndAcceptance.Services.Contracts.Models.Car;
@@ -13,10 +12,20 @@ public class ServiceProfile : Profile
 {
     public ServiceProfile()
     {
+        CreateMap<Buyer, BuyerModel>().ReverseMap();
+        CreateMap<BuyerCreateModel, Buyer>();
+
+        CreateMap<Car, CarModel>().ReverseMap();
+        CreateMap<CarCreateModel, Car>();
+
+        CreateMap<City, CityModel>().ReverseMap();
+        CreateMap<CityCreateModel, City>();
+
+        CreateMap<Salesman, SalesmanModel>().ReverseMap();
+        CreateMap<SalesmanCreateModel, Salesman>();
+
         CreateMap<AcceptanceAct, AcceptanceActModel>();
-        CreateMap<Buyer, BuyerModel>();
-        CreateMap<Car, CarModel>();
-        CreateMap<City, CityModel>();
-        CreateMap<Salesman, SalesmanModel>();
+        CreateMap<AcceptanceActCreateModel, AcceptanceAct>();
+        CreateMap<AcceptanceActUpdateModel, AcceptanceAct>();
     }
 }

@@ -23,20 +23,20 @@ public class AcceptanceActModel : AcceptanceActCreateModel
     /// <summary>
     /// Город составления акта
     /// </summary>
-    public virtual CityModel CityModel { get; set; }
+    public CityModel City { get; set; }  = null!;
 
     /// <summary>
     /// Покупатель
     /// </summary>
-    public virtual BuyerModel BuyerModel { get; set; }
+    public  BuyerModel Buyer { get; set; }  = null!;
     
     /// <summary>
     /// Продавец
     /// </summary>
-    public virtual SalesmanModel SalesmanModel { get; set; }
+    public  SalesmanModel Salesman { get; set; } = null!;
 
     /// <summary>
     /// Принимаемый/передаваемый автомобиль
     /// </summary>
-    public virtual CarModel CarModel { get; set; }
+    public CarModel Car { get; set; } = null!;
 }

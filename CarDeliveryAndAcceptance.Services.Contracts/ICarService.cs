@@ -14,19 +14,19 @@ public interface ICarService
     /// <summary>
     /// Получение автомобиля по ID
     /// </summary>
-    Task<CarModel?> GetCarByIdAsync(Guid id, CancellationToken cancellationToken);
+    Task<CarModel> GetCarByIdAsync(Guid id, CancellationToken cancellationToken);
 
 
     /// <summary>
     /// Поиск автомобиля по VIN-коду
     /// </summary>
-    Task<CarModel?> GetCarByVinCodeAsync(string vinCode, CancellationToken cancellationToken);
+    Task<CarModel> GetCarByVinCodeAsync(string vinCode, CancellationToken cancellationToken);
 
 
     /// <summary>
     /// Поиск автомобиля по регистрационному знаку
     /// </summary>
-    Task<CarModel?> GetCarByLicensePlateAsync(string licensePlate, CancellationToken cancellationToken);
+    Task<CarModel> GetCarByLicensePlateAsync(string licensePlate, CancellationToken cancellationToken);
     
     
     /// <summary>

@@ -36,6 +36,10 @@ public class SalesmanService : ISalesmanService
     async Task<SalesmanModel> ISalesmanService.GetSalesmanByIdAsync(Guid id, CancellationToken cancellationToken)
     {
         var result = await salesmanRepository.GetSalesmanByIdAsync(id, cancellationToken);
+        if (result is null)
+        {
+            throw new EntityNotFoundException<Salesman>(id);
+        }
         return mapper.Map<SalesmanModel>(result);
     }
     

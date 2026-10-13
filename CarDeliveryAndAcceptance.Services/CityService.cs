@@ -35,9 +35,13 @@ public class CityService : ICityService
     /// <summary>
     /// Получение города по ID
     /// </summary>
-    async Task<CityModel?> ICityService.GetCityByIdAsync(Guid id, CancellationToken cancellationToken)
+    async Task<CityModel> ICityService.GetCityByIdAsync(Guid id, CancellationToken cancellationToken)
     {
         var result = await cityRepository.GetCityByIdAsync(id, cancellationToken);
+        if (result is null)
+        {
+            throw new EntityNotFoundException<City>(id);
+        }
         return mapper.Map<CityModel>(result);
     }
     
@@ -45,9 +49,10 @@ public class CityService : ICityService
     /// <summary>
     /// Поиск города по названию
     /// </summary>
-    async Task<CityModel?> ICityService.GetCityByNameAsync(string Name, CancellationToken cancellationToken)
+    async Task<CityModel> ICityService.GetCityByNameAsync(string Name, CancellationToken cancellationToken)
     {
         var result = await cityRepository.GetCityByNameAsync(Name , cancellationToken);
+        
         return mapper.Map<CityModel>(result);
     }
     
@@ -70,7 +75,7 @@ public class CityService : ICityService
         var entity = await cityRepository.GetCityByIdAsync(cityModel.Id, cancellationToken);
         if (entity is null)
         {
-            throw new EntityNotFoundException<Car>(cityModel.Id);
+            throw new EntityNotFoundException<City>(cityModel.Id);
         }
 
         mapper.Map(cityModel, entity);

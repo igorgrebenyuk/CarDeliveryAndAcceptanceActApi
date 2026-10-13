@@ -14,13 +14,13 @@ public interface ICityService
     /// <summary>
     /// Получение города по ID
     /// </summary>
-    Task<CityModel?> GetCityByIdAsync(Guid id, CancellationToken cancellationToken);
+    Task<CityModel> GetCityByIdAsync(Guid id, CancellationToken cancellationToken);
 
 
     /// <summary>
     /// Поиск города по названию
     /// </summary>
-    Task<CityModel?> GetCityByNameAsync(string Name, CancellationToken cancellationToken);
+    Task<CityModel> GetCityByNameAsync(string Name, CancellationToken cancellationToken);
     
     /// <summary>
     ///Добавление города
