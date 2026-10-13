@@ -1,11 +1,12 @@
-﻿using CarDeliveryAndAcceptance.Entities;
+﻿using CarDeliveryAndAcceptance.Dal.Contracts.Repositories;
+using CarDeliveryAndAcceptance.Entities;
 
 namespace CarDeliveryAndAcceptance.Repositories.Contracts;
 
 /// <summary>
 /// Репозиторий работы с <see cref="City"/>
 /// </summary>
-public interface ICityRepository
+public interface ICityRepository : IBaseWriteRepository<City>
 {
     /// <summary>
     /// Получение всех городов

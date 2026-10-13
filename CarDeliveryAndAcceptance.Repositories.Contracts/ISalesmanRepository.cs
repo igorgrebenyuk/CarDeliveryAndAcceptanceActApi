@@ -1,11 +1,12 @@
-﻿using CarDeliveryAndAcceptance.Entities;
+﻿using CarDeliveryAndAcceptance.Dal.Contracts.Repositories;
+using CarDeliveryAndAcceptance.Entities;
 
 namespace CarDeliveryAndAcceptance.Repositories.Contracts;
 
 /// <summary>
 /// Репозиторий работы с <see cref="Salesman"/>
 /// </summary>
-public interface ISalesmanRepository
+public interface ISalesmanRepository : IBaseWriteRepository<Salesman>
 {
     /// <summary>
     /// Получение всех продавцов

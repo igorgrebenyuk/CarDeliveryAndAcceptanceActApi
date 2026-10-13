@@ -48,7 +48,6 @@ namespace CarDeliveryAndAcceptance.Entities;
         public string BodyNumber { get; set; } = string.Empty;
 
         
-        // Color по идее можно хранить в виде специалього типа, просто у ИИ спросить
         /// <summary>
         /// Цвет
         /// </summary>

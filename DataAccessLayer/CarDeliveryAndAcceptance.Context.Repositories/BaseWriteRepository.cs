@@ -6,7 +6,8 @@ namespace CarDeliveryAndAcceptance.Context.Repositories;
 /// <summary>
 /// Базовый класс репозитория записи данных
 /// </summary>
-public abstract class BaseWriteRepository<T> where T : class, IEntity
+public abstract class BaseWriteRepository<T> : IBaseWriteRepository<T>
+    where T : class, IEntity
 {
     private readonly IDbWriterContext writerContext;
     
