@@ -14,4 +14,19 @@ public interface IAcceptanceActService
     /// Получение акта по ID
     /// </summary>
     Task<AcceptanceActModel> GetAcceptanceActByIdAsync(Guid id , CancellationToken cancellationToken);
+    
+    /// <summary>
+    ///Добавление акта
+    /// </summary>
+    Task CreateAcceptanceActAsync(AcceptanceActCreateModel acceptanceActCreateModel, CancellationToken cancellationToken);
+
+    /// <summary>
+    ///Обновление акта
+    /// </summary>
+    Task UpdateAcceptanceActAsync(AcceptanceActModel acceptanceActModel, CancellationToken cancellationToken);
+
+    /// <summary>
+    ///Удаление акта
+    /// </summary>
+    Task DeleteAcceptanceActAsync(Guid id, CancellationToken cancellationToken);
 }

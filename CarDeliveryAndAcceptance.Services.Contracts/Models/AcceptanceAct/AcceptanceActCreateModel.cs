@@ -2,12 +2,10 @@
 
 public class AcceptanceActCreateModel
 {
-    
     /// <summary>
     /// Уникальный идентификатор города
     /// </summary>
     public Guid CityId { get; set; }
-    
     
     /// <summary>
     /// Уникальный идентификатор покупателя
