@@ -25,7 +25,7 @@ public interface ISalesmanService
     /// <summary>
     ///Добавление продавца
     /// </summary>
-    Task CreateSalesmanAsync(SalesmanCreateModel salesmanCreateModel, CancellationToken cancellationToken);
+    Task<SalesmanModel> CreateSalesmanAsync(SalesmanCreateModel salesmanCreateModel, CancellationToken cancellationToken);
 
     /// <summary>
     ///Обновление продавца

@@ -52,15 +52,26 @@ public class AcceptanceActService : IAcceptanceActService
         return mapper.Map<AcceptanceActModel>(result);
     }
 
-    async Task IAcceptanceActService.CreateAcceptanceActAsync(AcceptanceActCreateModel acceptanceActCreateModel, CancellationToken cancellationToken)
+    async Task<AcceptanceActModel> IAcceptanceActService.CreateAcceptanceActAsync(AcceptanceActCreateModel acceptanceActCreateModel, CancellationToken cancellationToken)
     {
         await EnsureRelatedEntitiesExistAsync(
             acceptanceActCreateModel.CarId, acceptanceActCreateModel.BuyerId, acceptanceActCreateModel.SalesmanId, acceptanceActCreateModel.CityId, cancellationToken);
-        
+
+        var existing = await acceptanceActRepository.GetAcceptanceActByParticipantsAsync(
+            acceptanceActCreateModel.CarId, acceptanceActCreateModel.BuyerId, acceptanceActCreateModel.SalesmanId, cancellationToken);
+        if (existing is not null)
+        {
+            throw new CarDeliveryAndAcceptanceInvalidOperationException("Акт с таким автомобилем, покупателем и продавцом уже существует");
+        }
+
         var entity = mapper.Map<AcceptanceAct>(acceptanceActCreateModel);
         acceptanceActRepository.Add(entity);
 
         await unitOfWork.SaveChangesAsync(cancellationToken);
+
+        // Перечитываем акт, чтобы в ответе были вложенные город, покупатель, продавец и автомобиль
+        var created = await acceptanceActRepository.GetAcceptanceActByIdAsync(entity.Id, cancellationToken);
+        return mapper.Map<AcceptanceActModel>(created);
     }
 
     async Task IAcceptanceActService.UpdateAcceptanceActAsync(AcceptanceActUpdateModel acceptanceActModel, CancellationToken cancellationToken)
@@ -74,8 +85,21 @@ public class AcceptanceActService : IAcceptanceActService
         
         await EnsureRelatedEntitiesExistAsync(
             acceptanceActModel.CarId, acceptanceActModel.BuyerId, acceptanceActModel.SalesmanId, acceptanceActModel.CityId, cancellationToken);
-        
+
+        var existing = await acceptanceActRepository.GetAcceptanceActByParticipantsAsync(
+            acceptanceActModel.CarId, acceptanceActModel.BuyerId, acceptanceActModel.SalesmanId, cancellationToken);
+        if (existing is not null && existing.Id != acceptanceActModel.Id)
+        {
+            throw new CarDeliveryAndAcceptanceInvalidOperationException("Акт с таким автомобилем, покупателем и продавцом уже существует");
+        }
+
         mapper.Map(acceptanceActModel, entity);
+
+        entity.City = null!;
+        entity.Buyer = null!;
+        entity.Salesman = null!;
+        entity.Car = null!;
+
         acceptanceActRepository.Update(entity);
 
         await unitOfWork.SaveChangesAsync(cancellationToken);

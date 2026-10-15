@@ -59,12 +59,19 @@ public class CityService : ICityService
     /// <summary>
     ///Добавление города
     /// </summary>
-    async Task ICityService.CreateCityAsync(CityCreateModel cityCreateModel, CancellationToken cancellationToken)
+    async Task<CityModel> ICityService.CreateCityAsync(CityCreateModel cityCreateModel, CancellationToken cancellationToken)
     {
+        var existing = await cityRepository.GetCityByNameAsync(cityCreateModel.Name, cancellationToken);
+        if (existing is not null)
+        {
+            throw new CarDeliveryAndAcceptanceInvalidOperationException("Город с таким названием уже существует");
+        }
+
         var entity = mapper.Map<City>(cityCreateModel);
         cityRepository.Add(entity);
 
         await unitOfWork.SaveChangesAsync(cancellationToken);
+        return mapper.Map<CityModel>(entity);
     }
     
     /// <summary>
@@ -76,6 +83,12 @@ public class CityService : ICityService
         if (entity is null)
         {
             throw new EntityNotFoundException<City>(cityModel.Id);
+        }
+
+        var existing = await cityRepository.GetCityByNameAsync(cityModel.Name, cancellationToken);
+        if (existing is not null && existing.Id != cityModel.Id)
+        {
+            throw new CarDeliveryAndAcceptanceInvalidOperationException("Город с таким названием уже существует");
         }
 
         mapper.Map(cityModel, entity);

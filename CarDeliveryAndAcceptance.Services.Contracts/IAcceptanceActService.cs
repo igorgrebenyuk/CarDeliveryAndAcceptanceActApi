@@ -18,7 +18,7 @@ public interface IAcceptanceActService
     /// <summary>
     ///Добавление акта
     /// </summary>
-    Task CreateAcceptanceActAsync(AcceptanceActCreateModel acceptanceActCreateModel, CancellationToken cancellationToken);
+    Task<AcceptanceActModel> CreateAcceptanceActAsync(AcceptanceActCreateModel acceptanceActCreateModel, CancellationToken cancellationToken);
 
     /// <summary>
     ///Обновление акта

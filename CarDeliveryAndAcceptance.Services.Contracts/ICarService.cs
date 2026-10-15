@@ -32,7 +32,7 @@ public interface ICarService
     /// <summary>
     ///Добавление автомобиля
     /// </summary>
-    Task CreateCarAsync(CarCreateModel buyerCreateModel, CancellationToken cancellationToken);
+    Task<CarModel> CreateCarAsync(CarCreateModel buyerCreateModel, CancellationToken cancellationToken);
 
     /// <summary>
     ///Обновление автомобиля

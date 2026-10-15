@@ -43,4 +43,12 @@ public class AcceptanceActRepository : BaseWriteRepository<AcceptanceAct>, IAcce
             .Include(x => x.Car)
             .ById(id)
             .FirstOrDefaultAsync(cancellationToken);
+    
+    Task<AcceptanceAct?> IAcceptanceActRepository.GetAcceptanceActByParticipantsAsync(Guid carId, Guid buyerId, Guid salesmanId, CancellationToken cancellationToken)
+        => reader.Read<AcceptanceAct>()
+            .NotDeletedAt()
+            .FirstOrDefaultAsync(x => x.CarId == carId 
+                                      && x.BuyerId == buyerId 
+                                      && x.SalesmanId == salesmanId,
+                                        cancellationToken);
 }

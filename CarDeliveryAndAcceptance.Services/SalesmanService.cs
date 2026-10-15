@@ -55,12 +55,19 @@ public class SalesmanService : ISalesmanService
     /// <summary>
     ///Добавление продавца
     /// </summary>
-    async Task ISalesmanService.CreateSalesmanAsync(SalesmanCreateModel salesmanCreateModel, CancellationToken cancellationToken)
+    async Task<SalesmanModel> ISalesmanService.CreateSalesmanAsync(SalesmanCreateModel salesmanCreateModel, CancellationToken cancellationToken)
     {
+        var existing = await salesmanRepository.GetSalesmanByNameAsync(salesmanCreateModel.Name, cancellationToken);
+        if (existing is not null)
+        {
+            throw new CarDeliveryAndAcceptanceInvalidOperationException("Продавец с таким названием уже существует");
+        }
+
         var entity = mapper.Map<Salesman>(salesmanCreateModel);
         salesmanRepository.Add(entity);
 
         await unitOfWork.SaveChangesAsync(cancellationToken);
+        return mapper.Map<SalesmanModel>(entity);
     }
     
     /// <summary>
@@ -72,6 +79,12 @@ public class SalesmanService : ISalesmanService
         if (entity is null)
         {
             throw new EntityNotFoundException<Salesman>(salesmanModel.Id);
+        }
+
+        var existing = await salesmanRepository.GetSalesmanByNameAsync(salesmanModel.Name, cancellationToken);
+        if (existing is not null && existing.Id != salesmanModel.Id)
+        {
+            throw new CarDeliveryAndAcceptanceInvalidOperationException("Продавец с таким названием уже существует");
         }
 
         mapper.Map(salesmanModel, entity);

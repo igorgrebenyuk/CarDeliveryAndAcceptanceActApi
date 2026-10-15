@@ -12,23 +12,26 @@ namespace CarDelivery_AcceptanceActApi.Controllers;
 /// Города
 /// </summary>
 [ApiController]
-[Route("[controller]")]
+[Route("api/cities")]
 public class CityController : ControllerBase
 {
     private readonly ICityService cityService;
     private readonly IMapper mapper;
     private readonly IValidateService validateService;
- 
+
     /// <summary>
     /// ctor
     /// </summary>
+    /// <param name="cityService">Сервис работы с города</param>
+    /// <param name="mapper">Маппер для преобразования моделей</param>
+    /// <param name="validateService">Сервис валидации моделей</param>
     public CityController(ICityService cityService, IMapper mapper, IValidateService validateService)
     {
         this.cityService = cityService;
         this.mapper = mapper;
         this.validateService = validateService;
     }
- 
+
     /// <summary>
     /// Получить все города
     /// </summary>
@@ -36,10 +39,10 @@ public class CityController : ControllerBase
     [ProducesResponseType<IReadOnlyCollection<CityApiModel>>(StatusCodes.Status200OK)]
     public async Task<IActionResult> Get(CancellationToken cancellationToken)
     {
-        var cities = await cityService.GetCitiesAsync(cancellationToken);
-        return Ok(mapper.Map<IReadOnlyCollection<CityApiModel>>(cities));
+        var result = await cityService.GetCitiesAsync(cancellationToken);
+        return Ok(mapper.Map<IReadOnlyCollection<CityApiModel>>(result));
     }
- 
+
     /// <summary>
     /// Получить город по идентификатору
     /// </summary>
@@ -49,10 +52,10 @@ public class CityController : ControllerBase
     public async Task<IActionResult> Get([SwaggerParameter("Идентификатор города")] Guid id,
         CancellationToken cancellationToken)
     {
-        var city = await cityService.GetCityByIdAsync(id, cancellationToken);
-        return Ok(mapper.Map<CityApiModel>(city));
+        var result = await cityService.GetCityByIdAsync(id, cancellationToken);
+        return Ok(mapper.Map<CityApiModel>(result));
     }
- 
+
     /// <summary>
     /// Создать город
     /// </summary>
@@ -64,11 +67,11 @@ public class CityController : ControllerBase
     {
         var mapped = mapper.Map<CityCreateModel>(createModel);
         await validateService.ValidateAsync(mapped, cancellationToken);
-    
+
         var result = await cityService.CreateCityAsync(mapped, cancellationToken);
         return Ok(mapper.Map<CityApiModel>(result));
     }
- 
+
     /// <summary>
     /// Обновить город
     /// </summary>
@@ -81,20 +84,21 @@ public class CityController : ControllerBase
         CancellationToken cancellationToken)
     {
         var mapped = mapper.Map<CityModel>(createModel);
-        mapped.Id = id; 
+        mapped.Id = id;
         await validateService.ValidateAsync(mapped, cancellationToken);
- 
+
         await cityService.UpdateCityAsync(mapped, cancellationToken);
         return NoContent();
     }
- 
+
     /// <summary>
     /// Удалить город
     /// </summary>
     [HttpDelete("{id:guid}")]
     [ProducesResponseType(StatusCodes.Status204NoContent)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
-    public async Task<IActionResult> Delete(Guid id, CancellationToken cancellationToken)
+    public async Task<IActionResult> Delete([SwaggerParameter("Идентификатор города")] Guid id,
+        CancellationToken cancellationToken)
     {
         await cityService.DeleteCityAsync(id, cancellationToken);
         return NoContent();

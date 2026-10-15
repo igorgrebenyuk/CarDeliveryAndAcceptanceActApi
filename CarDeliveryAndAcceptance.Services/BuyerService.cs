@@ -55,12 +55,19 @@ public class BuyerService : IBuyerService
     /// <summary>
     ///Добавление покупателя
     /// </summary>
-    async Task IBuyerService.CreateBuyerAsync(BuyerCreateModel buyerCreateModel, CancellationToken cancellationToken)
+    async Task<BuyerModel> IBuyerService.CreateBuyerAsync(BuyerCreateModel buyerCreateModel, CancellationToken cancellationToken)
     {
+        var existing = await buyerRepository.GetBuyerByNameAsync(buyerCreateModel.Name, cancellationToken);
+        if (existing is not null)
+        {
+            throw new CarDeliveryAndAcceptanceInvalidOperationException("Покупатель с таким названием уже существует");
+        }
+
         var entity = mapper.Map<Buyer>(buyerCreateModel);
         buyerRepository.Add(entity);
 
         await unitOfWork.SaveChangesAsync(cancellationToken);
+        return mapper.Map<BuyerModel>(entity);
     }
     
     /// <summary>
@@ -72,6 +79,12 @@ public class BuyerService : IBuyerService
         if (entity is null)
         {
             throw new EntityNotFoundException<Buyer>(buyerModel.Id);
+        }
+
+        var existing = await buyerRepository.GetBuyerByNameAsync(buyerModel.Name, cancellationToken);
+        if (existing is not null && existing.Id != buyerModel.Id)
+        {
+            throw new CarDeliveryAndAcceptanceInvalidOperationException("Покупатель с таким названием уже существует");
         }
 
         mapper.Map(buyerModel, entity);

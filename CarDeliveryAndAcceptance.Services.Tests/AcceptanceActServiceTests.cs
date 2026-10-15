@@ -412,6 +412,129 @@ public class AcceptanceActServiceTests : CarDeliveryAndAcceptanceContextInMemory
     
     
         
+    /// <summary>
+    /// CreateAcceptanceActAsync возвращает созданный акт со вложенными моделями
+    /// </summary>
+    [Fact]
+    public async Task CreateAcceptanceActShouldReturnCreatedModelWithRelatedModels()
+    {
+        // Arrange
+        var related = await AddRelatedAsync();
+        var createModel = TestEntityProvider.Shared.Create<AcceptanceActCreateModel>(x =>
+        {
+            x.CarId = related.Car.Id;
+            x.BuyerId = related.Buyer.Id;
+            x.SalesmanId = related.Salesman.Id;
+            x.CityId = related.City.Id;
+        });
+
+        // Act
+        var result = await acceptanceActService.CreateAcceptanceActAsync(createModel, CancellationToken.None);
+
+        // Assert
+        result.Id.Should().NotBeEmpty();
+        result.Car.Id.Should().Be(related.Car.Id);
+        result.Buyer.Id.Should().Be(related.Buyer.Id);
+        result.Salesman.Id.Should().Be(related.Salesman.Id);
+        result.City.Id.Should().Be(related.City.Id);
+    }
+
+    /// <summary>
+    /// CreateAcceptanceActAsync выбрасывает исключение, если акт с таким автомобилем, покупателем и продавцом уже существует
+    /// </summary>
+    [Fact]
+    public async Task CreateAcceptanceActShouldThrowWhenActWithSameParticipantsExists()
+    {
+        // Arrange
+        var existing = await AddActAsync();
+        var createModel = new AcceptanceActCreateModel
+        {
+            CityId = existing.CityId,
+            BuyerId = existing.BuyerId,
+            SalesmanId = existing.SalesmanId,
+            CarId = existing.CarId
+        };
+
+        // Act
+        var act = () => acceptanceActService.CreateAcceptanceActAsync(createModel, CancellationToken.None);
+
+        // Assert
+        await act.Should().ThrowAsync<CarDeliveryAndAcceptanceInvalidOperationException>();
+        Context.Set<AcceptanceAct>().Should().ContainSingle();
+    }
+
+    /// <summary>
+    /// CreateAcceptanceActAsync не считает дублем удалённый акт
+    /// </summary>
+    [Fact]
+    public async Task CreateAcceptanceActShouldWorkWhenSameActIsDeleted()
+    {
+        // Arrange
+        var deleted = await AddActAsync(DateTimeOffset.UtcNow);
+        var createModel = new AcceptanceActCreateModel
+        {
+            CityId = deleted.CityId,
+            BuyerId = deleted.BuyerId,
+            SalesmanId = deleted.SalesmanId,
+            CarId = deleted.CarId
+        };
+
+        // Act
+        var act = () => acceptanceActService.CreateAcceptanceActAsync(createModel, CancellationToken.None);
+
+        // Assert
+        await act.Should().NotThrowAsync();
+    }
+
+    /// <summary>
+    /// UpdateAcceptanceActAsync выбрасывает исключение, если такое сочетание уже занято другим актом
+    /// </summary>
+    [Fact]
+    public async Task UpdateAcceptanceActShouldThrowWhenActWithSameParticipantsExists()
+    {
+        // Arrange
+        var first = await AddActAsync();
+        var second = await AddActAsync();
+        var updateModel = new AcceptanceActUpdateModel
+        {
+            Id = second.Id,
+            CityId = second.CityId,
+            BuyerId = first.BuyerId,
+            SalesmanId = first.SalesmanId,
+            CarId = first.CarId
+        };
+
+        // Act
+        var act = () => acceptanceActService.UpdateAcceptanceActAsync(updateModel, CancellationToken.None);
+
+        // Assert
+        await act.Should().ThrowAsync<CarDeliveryAndAcceptanceInvalidOperationException>();
+    }
+
+    /// <summary>
+    /// UpdateAcceptanceActAsync позволяет сохранить акт с его же сочетанием автомобиля, покупателя и продавца
+    /// </summary>
+    [Fact]
+    public async Task UpdateAcceptanceActShouldWorkWhenParticipantsAreNotChanged()
+    {
+        // Arrange
+        var entity = await AddActAsync();
+        var updateModel = new AcceptanceActUpdateModel
+        {
+            Id = entity.Id,
+            CityId = entity.CityId,
+            BuyerId = entity.BuyerId,
+            SalesmanId = entity.SalesmanId,
+            CarId = entity.CarId
+        };
+
+        // Act
+        var act = () => acceptanceActService.UpdateAcceptanceActAsync(updateModel, CancellationToken.None);
+
+        // Assert
+        await act.Should().NotThrowAsync();
+    }
+
     private async Task<Related> AddRelatedAsync(bool carDeleted = false)
     {
         var city = TestEntityProvider.Shared.Create<City>(x => x.DeletedAt = null);

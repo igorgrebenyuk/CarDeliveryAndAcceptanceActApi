@@ -25,7 +25,7 @@ public interface ICityService
     /// <summary>
     ///Добавление города
     /// </summary>
-    Task CreateCityAsync(CityCreateModel cityCreateModel, CancellationToken cancellationToken);
+    Task<CityModel> CreateCityAsync(CityCreateModel cityCreateModel, CancellationToken cancellationToken);
 
     /// <summary>
     ///Обновление города

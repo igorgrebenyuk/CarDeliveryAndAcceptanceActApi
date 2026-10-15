@@ -24,7 +24,7 @@ public interface IBuyerService
     /// <summary>
     ///Добавление покупателя
     /// </summary>
-    Task CreateBuyerAsync(BuyerCreateModel buyerCreateModel, CancellationToken cancellationToken);
+    Task<BuyerModel> CreateBuyerAsync(BuyerCreateModel buyerCreateModel, CancellationToken cancellationToken);
 
     /// <summary>
     ///Обновление покупателя
