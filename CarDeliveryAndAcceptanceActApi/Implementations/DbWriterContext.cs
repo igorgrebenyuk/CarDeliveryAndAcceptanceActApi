@@ -6,7 +6,7 @@ namespace CarDelivery_AcceptanceActApi.Implementations;
 /// <summary>
 /// 
 /// </summary>
-public class DbWriterContext(IWriter writer) : IDbWriterContext
+public class DbWriterContext(IWriter writer, IDateTimeProvider dateTimeProvider, IIdentityProvider identityProvider) : IDbWriterContext
 {
     /// <summary>
     /// 
