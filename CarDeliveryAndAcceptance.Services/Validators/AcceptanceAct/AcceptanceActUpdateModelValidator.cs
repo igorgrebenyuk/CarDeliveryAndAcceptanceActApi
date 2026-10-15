@@ -3,9 +3,9 @@ using FluentValidation;
 
 namespace CarDeliveryAndAcceptance.Services.Validators.AcceptanceAct;
 
-public class AcceptanceActUpdateModelValidator : AbstractValidator<AcceptanceActModel>
+public class AcceptanceActUpdateModelValidator : AbstractValidator<AcceptanceActUpdateModel>
 {
-    AcceptanceActUpdateModelValidator()
+    public AcceptanceActUpdateModelValidator()
     {
         Include(new AcceptanceActCreateModelValidator());
         
