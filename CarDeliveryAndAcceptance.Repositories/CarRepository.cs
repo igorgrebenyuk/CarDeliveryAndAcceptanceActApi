@@ -56,4 +56,6 @@ public class CarRepository : BaseWriteRepository<Car>, ICarRepository
         => reader.Read<Car>()
             .NotDeletedAt()
             .FirstOrDefaultAsync(x => x.LicensePlate.ToLower() == licensePlate.ToLower() , cancellationToken);
+
+    
 }

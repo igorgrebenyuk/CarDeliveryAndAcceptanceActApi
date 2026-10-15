@@ -1,0 +1,31 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>net10.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <GenerateDocumentationFile>true</GenerateDocumentationFile>
+    <RootNamespace>CarDelivery_AcceptanceActApi</RootNamespace>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="AutoMapper" Version="16.2.0" />
+    <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="10.0.9" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="10.0.9">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+    <PackageReference Include="Swashbuckle.AspNetCore.Annotations" Version="10.3.0" />
+    <PackageReference Include="Swashbuckle.AspNetCore.SwaggerUI" Version="10.2.3" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\CarDeliveryAndAcceptance.Repositories.Contracts\CarDeliveryAndAcceptance.Repositories.Contracts.csproj" />
+    <ProjectReference Include="..\CarDeliveryAndAcceptance.Repositories\CarDeliveryAndAcceptance.Repositories.csproj" />
+    <ProjectReference Include="..\CarDeliveryAndAcceptance.Services.Contracts\CarDeliveryAndAcceptance.Services.Contracts.csproj" />
+    <ProjectReference Include="..\CarDeliveryAndAcceptance.Services\CarDeliveryAndAcceptance.Services.csproj" />
+    <ProjectReference Include="..\DataAccessLayer\CarDeliveryAndAcceptance.Context\CarDeliveryAndAcceptance.Context.csproj" />
+    <ProjectReference Include="..\DataAccessLayer\CarDeliveryAndAcceptance.Dal.Contracts\CarDeliveryAndAcceptance.Dal.Contracts.csproj" />
+  </ItemGroup>
+
+</Project>

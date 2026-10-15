@@ -66,12 +66,25 @@ public class CarService : ICarService
     /// <summary>
     ///Добавление автомобиля
     /// </summary>
-    async Task ICarService.CreateCarAsync(CarCreateModel carCreateModel, CancellationToken cancellationToken)
+    async Task<CarModel> ICarService.CreateCarAsync(CarCreateModel carCreateModel, CancellationToken cancellationToken)
     {
+        var existingByVin = await carRepository.GetCarByVinCodeAsync(carCreateModel.VinCode, cancellationToken);
+        if (existingByVin is not null)
+        {
+            throw new CarDeliveryAndAcceptanceInvalidOperationException("Автомобиль с таким VIN-кодом уже существует");
+        }
+
+        var existingByPlate = await carRepository.GetCarByLicensePlateAsync(carCreateModel.LicensePlate, cancellationToken);
+        if (existingByPlate is not null)
+        {
+            throw new CarDeliveryAndAcceptanceInvalidOperationException("Автомобиль с таким регистрационным знаком уже существует");
+        }
+
         var entity = mapper.Map<Car>(carCreateModel);
         carRepository.Add(entity);
 
         await unitOfWork.SaveChangesAsync(cancellationToken);
+        return mapper.Map<CarModel>(entity);
     }
     
     /// <summary>
@@ -83,6 +96,18 @@ public class CarService : ICarService
         if (entity is null)
         {
             throw new EntityNotFoundException<Car>(carModel.Id);
+        }
+
+        var existingByVin = await carRepository.GetCarByVinCodeAsync(carModel.VinCode, cancellationToken);
+        if (existingByVin is not null && existingByVin.Id != carModel.Id)
+        {
+            throw new CarDeliveryAndAcceptanceInvalidOperationException("Автомобиль с таким VIN-кодом уже существует");
+        }
+
+        var existingByPlate = await carRepository.GetCarByLicensePlateAsync(carModel.LicensePlate, cancellationToken);
+        if (existingByPlate is not null && existingByPlate.Id != carModel.Id)
+        {
+            throw new CarDeliveryAndAcceptanceInvalidOperationException("Автомобиль с таким регистрационным знаком уже существует");
         }
 
         mapper.Map(carModel, entity);

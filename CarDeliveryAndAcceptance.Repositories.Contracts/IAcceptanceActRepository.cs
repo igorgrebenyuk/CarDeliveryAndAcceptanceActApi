@@ -20,4 +20,10 @@ public interface IAcceptanceActRepository: IBaseWriteRepository<AcceptanceAct>
     Task<AcceptanceAct?> GetAcceptanceActByIdAsync(Guid id , CancellationToken cancellationToken);
     
     
+    /// <summary>
+    /// Поиск акта по сочетанию автомобиля, покупателя и продавца
+    /// </summary>
+    Task<AcceptanceAct?> GetAcceptanceActByParticipantsAsync(Guid carId, Guid buyerId, Guid salesmanId, CancellationToken cancellationToken);
+    
+    
 }

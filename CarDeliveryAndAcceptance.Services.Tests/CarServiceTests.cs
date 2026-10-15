@@ -307,6 +307,126 @@ public class CarServiceTests : CarDeliveryAndAcceptanceContextInMemory
     }
     
     
+    /// <summary>
+    /// CreateCarAsync возвращает созданную модель
+    /// </summary>
+    [Fact]
+    public async Task CreateCarShouldReturnCreatedModel()
+    {
+        // Arrange
+        var createModel = TestEntityProvider.Shared.Create<CarCreateModel>();
+
+        // Act
+        var result = await carService.CreateCarAsync(createModel, CancellationToken.None);
+
+        // Assert
+        result.Id.Should().NotBeEmpty();
+        result.VinCode.Should().Be(createModel.VinCode);
+        result.LicensePlate.Should().Be(createModel.LicensePlate);
+    }
+
+    /// <summary>
+    /// CreateCarAsync выбрасывает исключение, если VIN-код уже занят
+    /// </summary>
+    [Fact]
+    public async Task CreateCarShouldThrowWhenVinCodeAlreadyExists()
+    {
+        // Arrange
+        var existing = await AddCarAsync();
+        var createModel = TestEntityProvider.Shared.Create<CarCreateModel>(x => x.VinCode = existing.VinCode);
+
+        // Act
+        var act = () => carService.CreateCarAsync(createModel, CancellationToken.None);
+
+        // Assert
+        await act.Should().ThrowAsync<CarDeliveryAndAcceptanceInvalidOperationException>();
+        Context.Set<Car>().Should().ContainSingle();
+    }
+
+    /// <summary>
+    /// CreateCarAsync выбрасывает исключение, если регистрационный знак уже занят
+    /// </summary>
+    [Fact]
+    public async Task CreateCarShouldThrowWhenLicensePlateAlreadyExists()
+    {
+        // Arrange
+        var existing = await AddCarAsync();
+        var createModel = TestEntityProvider.Shared.Create<CarCreateModel>(x => x.LicensePlate = existing.LicensePlate);
+
+        // Act
+        var act = () => carService.CreateCarAsync(createModel, CancellationToken.None);
+
+        // Assert
+        await act.Should().ThrowAsync<CarDeliveryAndAcceptanceInvalidOperationException>();
+        Context.Set<Car>().Should().ContainSingle();
+    }
+
+    /// <summary>
+    /// UpdateCarAsync выбрасывает исключение, если VIN-код занят другим автомобилем
+    /// </summary>
+    [Fact]
+    public async Task UpdateCarShouldThrowWhenVinCodeAlreadyExists()
+    {
+        // Arrange
+        var first = await AddCarAsync();
+        var second = await AddCarAsync();
+        var updateModel = TestEntityProvider.Shared.Create<CarModel>(x =>
+        {
+            x.Id = second.Id;
+            x.VinCode = first.VinCode;
+        });
+
+        // Act
+        var act = () => carService.UpdateCarAsync(updateModel, CancellationToken.None);
+
+        // Assert
+        await act.Should().ThrowAsync<CarDeliveryAndAcceptanceInvalidOperationException>();
+    }
+
+    /// <summary>
+    /// UpdateCarAsync выбрасывает исключение, если регистрационный знак занят другим автомобилем
+    /// </summary>
+    [Fact]
+    public async Task UpdateCarShouldThrowWhenLicensePlateAlreadyExists()
+    {
+        // Arrange
+        var first = await AddCarAsync();
+        var second = await AddCarAsync();
+        var updateModel = TestEntityProvider.Shared.Create<CarModel>(x =>
+        {
+            x.Id = second.Id;
+            x.LicensePlate = first.LicensePlate;
+        });
+
+        // Act
+        var act = () => carService.UpdateCarAsync(updateModel, CancellationToken.None);
+
+        // Assert
+        await act.Should().ThrowAsync<CarDeliveryAndAcceptanceInvalidOperationException>();
+    }
+
+    /// <summary>
+    /// UpdateCarAsync позволяет сохранить собственные VIN-код и регистрационный знак
+    /// </summary>
+    [Fact]
+    public async Task UpdateCarShouldWorkWhenVinCodeAndLicensePlateAreNotChanged()
+    {
+        // Arrange
+        var entity = await AddCarAsync();
+        var updateModel = TestEntityProvider.Shared.Create<CarModel>(x =>
+        {
+            x.Id = entity.Id;
+            x.VinCode = entity.VinCode;
+            x.LicensePlate = entity.LicensePlate;
+        });
+
+        // Act
+        var act = () => carService.UpdateCarAsync(updateModel, CancellationToken.None);
+
+        // Assert
+        await act.Should().NotThrowAsync();
+    }
+
     private async Task<Car> AddCarAsync(DateTimeOffset? deletedAt = null)
     {
         var entity = TestEntityProvider.Shared.Create<Car>(x => x.DeletedAt = deletedAt);

@@ -173,4 +173,43 @@ public class AcceptanceActRepositoryTests : CarDeliveryAndAcceptanceContextInMem
         // Assert
         result.Should().BeNull();
     }
+
+    /// <summary>
+    /// Должен вернуть акт по сочетанию автомобиля, покупателя и продавца
+    /// </summary>
+    [Fact]
+    public async Task GetAcceptanceActByParticipantsShouldReturnEntity()
+    {
+        // Arrange
+        await CreateActAsync();
+        var target = await CreateActAsync();
+
+        // Act
+        var result = await repository.GetAcceptanceActByParticipantsAsync(
+            target.CarId, target.BuyerId, target.SalesmanId, CancellationToken.None);
+
+        // Assert
+        result.Should().NotBeNull();
+        result!.Id.Should().Be(target.Id);
+    }
+
+    /// <summary>
+    /// Должен вернуть null, если акт с таким сочетанием удалён или не существует
+    /// </summary>
+    [Fact]
+    public async Task GetAcceptanceActByParticipantsShouldReturnNullWhenDeletedOrMissing()
+    {
+        // Arrange
+        var deleted = await CreateActAsync(DateTimeOffset.UtcNow);
+
+        // Act
+        var byDeleted = await repository.GetAcceptanceActByParticipantsAsync(
+            deleted.CarId, deleted.BuyerId, deleted.SalesmanId, CancellationToken.None);
+        var byMissing = await repository.GetAcceptanceActByParticipantsAsync(
+            Guid.NewGuid(), Guid.NewGuid(), Guid.NewGuid(), CancellationToken.None);
+
+        // Assert
+        byDeleted.Should().BeNull();
+        byMissing.Should().BeNull();
+    }
 }

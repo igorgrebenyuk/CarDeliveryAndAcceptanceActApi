@@ -255,6 +255,84 @@ public class BuyerServiceTests : CarDeliveryAndAcceptanceContextInMemory
         Context.Set<Buyer>().Single(x => x.Id == entity.Id).DeletedAt.Should().BeNull();
     }
     
+    /// <summary>
+    /// CreateBuyerAsync возвращает созданную модель
+    /// </summary>
+    [Fact]
+    public async Task CreateBuyerShouldReturnCreatedModel()
+    {
+        // Arrange
+        var createModel = TestEntityProvider.Shared.Create<BuyerCreateModel>();
+
+        // Act
+        var result = await buyerService.CreateBuyerAsync(createModel, CancellationToken.None);
+
+        // Assert
+        result.Id.Should().NotBeEmpty();
+        result.Name.Should().Be(createModel.Name);
+    }
+
+    /// <summary>
+    /// CreateBuyerAsync выбрасывает исключение, если покупатель с таким названием уже существует
+    /// </summary>
+    [Fact]
+    public async Task CreateBuyerShouldThrowWhenNameAlreadyExists()
+    {
+        // Arrange
+        var existing = await AddBuyerAsync();
+        var createModel = TestEntityProvider.Shared.Create<BuyerCreateModel>(x => x.Name = existing.Name);
+
+        // Act
+        var act = () => buyerService.CreateBuyerAsync(createModel, CancellationToken.None);
+
+        // Assert
+        await act.Should().ThrowAsync<CarDeliveryAndAcceptanceInvalidOperationException>();
+        Context.Set<Buyer>().Should().ContainSingle();
+    }
+
+    /// <summary>
+    /// UpdateBuyerAsync выбрасывает исключение, если название занято другой записью
+    /// </summary>
+    [Fact]
+    public async Task UpdateBuyerShouldThrowWhenNameAlreadyExists()
+    {
+        // Arrange
+        var first = await AddBuyerAsync();
+        var second = await AddBuyerAsync();
+        var updateModel = TestEntityProvider.Shared.Create<BuyerModel>(x =>
+        {
+            x.Id = second.Id;
+            x.Name = first.Name;
+        });
+
+        // Act
+        var act = () => buyerService.UpdateBuyerAsync(updateModel, CancellationToken.None);
+
+        // Assert
+        await act.Should().ThrowAsync<CarDeliveryAndAcceptanceInvalidOperationException>();
+    }
+
+    /// <summary>
+    /// UpdateBuyerAsync позволяет сохранить собственное название записи
+    /// </summary>
+    [Fact]
+    public async Task UpdateBuyerShouldWorkWhenNameIsNotChanged()
+    {
+        // Arrange
+        var entity = await AddBuyerAsync();
+        var updateModel = TestEntityProvider.Shared.Create<BuyerModel>(x =>
+        {
+            x.Id = entity.Id;
+            x.Name = entity.Name;
+        });
+
+        // Act
+        var act = () => buyerService.UpdateBuyerAsync(updateModel, CancellationToken.None);
+
+        // Assert
+        await act.Should().NotThrowAsync();
+    }
+
     private async Task<Buyer> AddBuyerAsync(DateTimeOffset? deletedAt = null)
     {
         var entity = TestEntityProvider.Shared.Create<Buyer>(x => x.DeletedAt = deletedAt);

@@ -248,6 +248,84 @@ public class CityServiceTests : CarDeliveryAndAcceptanceContextInMemory
         Context.Set<City>().Single(x => x.Id == entity.Id).DeletedAt.Should().BeNull();
     }
     
+    /// <summary>
+    /// CreateCityAsync возвращает созданную модель
+    /// </summary>
+    [Fact]
+    public async Task CreateCityShouldReturnCreatedModel()
+    {
+        // Arrange
+        var createModel = TestEntityProvider.Shared.Create<CityCreateModel>();
+
+        // Act
+        var result = await cityService.CreateCityAsync(createModel, CancellationToken.None);
+
+        // Assert
+        result.Id.Should().NotBeEmpty();
+        result.Name.Should().Be(createModel.Name);
+    }
+
+    /// <summary>
+    /// CreateCityAsync выбрасывает исключение, если город с таким названием уже существует
+    /// </summary>
+    [Fact]
+    public async Task CreateCityShouldThrowWhenNameAlreadyExists()
+    {
+        // Arrange
+        var existing = await AddCityAsync();
+        var createModel = TestEntityProvider.Shared.Create<CityCreateModel>(x => x.Name = existing.Name);
+
+        // Act
+        var act = () => cityService.CreateCityAsync(createModel, CancellationToken.None);
+
+        // Assert
+        await act.Should().ThrowAsync<CarDeliveryAndAcceptanceInvalidOperationException>();
+        Context.Set<City>().Should().ContainSingle();
+    }
+
+    /// <summary>
+    /// UpdateCityAsync выбрасывает исключение, если название занято другой записью
+    /// </summary>
+    [Fact]
+    public async Task UpdateCityShouldThrowWhenNameAlreadyExists()
+    {
+        // Arrange
+        var first = await AddCityAsync();
+        var second = await AddCityAsync();
+        var updateModel = TestEntityProvider.Shared.Create<CityModel>(x =>
+        {
+            x.Id = second.Id;
+            x.Name = first.Name;
+        });
+
+        // Act
+        var act = () => cityService.UpdateCityAsync(updateModel, CancellationToken.None);
+
+        // Assert
+        await act.Should().ThrowAsync<CarDeliveryAndAcceptanceInvalidOperationException>();
+    }
+
+    /// <summary>
+    /// UpdateCityAsync позволяет сохранить собственное название записи
+    /// </summary>
+    [Fact]
+    public async Task UpdateCityShouldWorkWhenNameIsNotChanged()
+    {
+        // Arrange
+        var entity = await AddCityAsync();
+        var updateModel = TestEntityProvider.Shared.Create<CityModel>(x =>
+        {
+            x.Id = entity.Id;
+            x.Name = entity.Name;
+        });
+
+        // Act
+        var act = () => cityService.UpdateCityAsync(updateModel, CancellationToken.None);
+
+        // Assert
+        await act.Should().NotThrowAsync();
+    }
+
     private async Task<City> AddCityAsync(DateTimeOffset? deletedAt = null)
     {
         var entity = TestEntityProvider.Shared.Create<City>(x => x.DeletedAt = deletedAt);

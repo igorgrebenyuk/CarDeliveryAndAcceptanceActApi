@@ -254,6 +254,84 @@ public class SalesmanServiceTests : CarDeliveryAndAcceptanceContextInMemory
         Context.Set<Salesman>().Single(x => x.Id == entity.Id).DeletedAt.Should().BeNull();
     }
     
+    /// <summary>
+    /// CreateSalesmanAsync возвращает созданную модель
+    /// </summary>
+    [Fact]
+    public async Task CreateSalesmanShouldReturnCreatedModel()
+    {
+        // Arrange
+        var createModel = TestEntityProvider.Shared.Create<SalesmanCreateModel>();
+
+        // Act
+        var result = await salesmanService.CreateSalesmanAsync(createModel, CancellationToken.None);
+
+        // Assert
+        result.Id.Should().NotBeEmpty();
+        result.Name.Should().Be(createModel.Name);
+    }
+
+    /// <summary>
+    /// CreateSalesmanAsync выбрасывает исключение, если продавец с таким названием уже существует
+    /// </summary>
+    [Fact]
+    public async Task CreateSalesmanShouldThrowWhenNameAlreadyExists()
+    {
+        // Arrange
+        var existing = await AddSalesmanAsync();
+        var createModel = TestEntityProvider.Shared.Create<SalesmanCreateModel>(x => x.Name = existing.Name);
+
+        // Act
+        var act = () => salesmanService.CreateSalesmanAsync(createModel, CancellationToken.None);
+
+        // Assert
+        await act.Should().ThrowAsync<CarDeliveryAndAcceptanceInvalidOperationException>();
+        Context.Set<Salesman>().Should().ContainSingle();
+    }
+
+    /// <summary>
+    /// UpdateSalesmanAsync выбрасывает исключение, если название занято другой записью
+    /// </summary>
+    [Fact]
+    public async Task UpdateSalesmanShouldThrowWhenNameAlreadyExists()
+    {
+        // Arrange
+        var first = await AddSalesmanAsync();
+        var second = await AddSalesmanAsync();
+        var updateModel = TestEntityProvider.Shared.Create<SalesmanModel>(x =>
+        {
+            x.Id = second.Id;
+            x.Name = first.Name;
+        });
+
+        // Act
+        var act = () => salesmanService.UpdateSalesmanAsync(updateModel, CancellationToken.None);
+
+        // Assert
+        await act.Should().ThrowAsync<CarDeliveryAndAcceptanceInvalidOperationException>();
+    }
+
+    /// <summary>
+    /// UpdateSalesmanAsync позволяет сохранить собственное название записи
+    /// </summary>
+    [Fact]
+    public async Task UpdateSalesmanShouldWorkWhenNameIsNotChanged()
+    {
+        // Arrange
+        var entity = await AddSalesmanAsync();
+        var updateModel = TestEntityProvider.Shared.Create<SalesmanModel>(x =>
+        {
+            x.Id = entity.Id;
+            x.Name = entity.Name;
+        });
+
+        // Act
+        var act = () => salesmanService.UpdateSalesmanAsync(updateModel, CancellationToken.None);
+
+        // Assert
+        await act.Should().NotThrowAsync();
+    }
+
     private async Task<Salesman> AddSalesmanAsync(DateTimeOffset? deletedAt = null)
     {
         var entity = TestEntityProvider.Shared.Create<Salesman>(x => x.DeletedAt = deletedAt);
