@@ -7,6 +7,8 @@ public class AcceptanceActUpdateModelValidator : AbstractValidator<AcceptanceAct
 {
     AcceptanceActUpdateModelValidator()
     {
+        Include(new AcceptanceActCreateModelValidator());
+        
         RuleFor(x => x.Id)
             .NotEmpty().WithMessage("Идентификатор акта обязателен.");
     }

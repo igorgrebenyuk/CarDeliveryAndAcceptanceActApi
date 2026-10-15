@@ -9,7 +9,9 @@ namespace CarDeliveryAndAcceptance.Services.Validators.Salesman;
 public class SalesmanModelValidator : AbstractValidator<SalesmanModel>
 {
     public SalesmanModelValidator()
-    {
+    {   
+        Include(new SalesmanCreateModelValidator());
+        
         RuleFor(x => x.Id)
             .NotEmpty()
             .WithMessage("Продавец обязателен");

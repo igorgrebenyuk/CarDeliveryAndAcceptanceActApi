@@ -5,6 +5,7 @@
 /// </summary>
 public class AcceptanceActUpdateModel : AcceptanceActCreateModel
 {
+    
     /// <summary>
     /// Идентификатор акта
     /// </summary>

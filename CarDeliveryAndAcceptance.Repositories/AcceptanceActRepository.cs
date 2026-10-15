@@ -7,38 +7,40 @@ using Microsoft.EntityFrameworkCore;
 namespace CarDeliveryAndAcceptance.Repositories;
 
 /// <summary>
-/// Репозиторий работы с <see cref="AcceptanceAct"/>>
+/// Репозиторий работы с <see cref="AcceptanceAct"/>
 /// </summary>
-public class AcceptanceActRepository : BaseWriteRepository<AcceptanceAct> , IAcceptanceActRepository
+public class AcceptanceActRepository : BaseWriteRepository<AcceptanceAct>, IAcceptanceActRepository
 {
     private readonly IReader reader;
-    
+
     /// <summary>
     /// ctor.
     /// </summary>
-    public AcceptanceActRepository(IDbWriterContext writerContext , IReader reader)
-    : base(writerContext)
+    public AcceptanceActRepository(IDbWriterContext writerContext, IReader reader)
+        : base(writerContext)
     {
         this.reader = reader;
     }
 
-    /// <summary>
-    /// Получение всех актов
-    /// </summary>
+    /// <inheritdoc />
     Task<IReadOnlyCollection<AcceptanceAct>> IAcceptanceActRepository.GetAcceptanceActsAsync(CancellationToken cancellationToken)
-    => reader.Read<AcceptanceAct>()
-            .NotDeletedAt()
-            .OrderBy(x => x.CarId)
-            .ThenBy(x => x.BuyerId)
-            .ThenBy(x => x.SalesmanId)
-            .ToReadOnlyCollectionAsync(cancellationToken);
-    
-    /// <summary>
-    /// Получение акта по ID
-    /// </summary>
-    Task <AcceptanceAct?> IAcceptanceActRepository.GetAcceptanceActByIdAsync(Guid id, CancellationToken cancellationToken)
         => reader.Read<AcceptanceAct>()
             .NotDeletedAt()
+            .Include(x => x.City)
+            .Include(x => x.Buyer)
+            .Include(x => x.Salesman)
+            .Include(x => x.Car)
+            .OrderBy(x => x.CreatedAt)
+            .ToReadOnlyCollectionAsync(cancellationToken);
+
+    /// <inheritdoc />
+    Task<AcceptanceAct?> IAcceptanceActRepository.GetAcceptanceActByIdAsync(Guid id, CancellationToken cancellationToken)
+        => reader.Read<AcceptanceAct>()
+            .NotDeletedAt()
+            .Include(x => x.City)
+            .Include(x => x.Buyer)
+            .Include(x => x.Salesman)
+            .Include(x => x.Car)
             .ById(id)
             .FirstOrDefaultAsync(cancellationToken);
 }

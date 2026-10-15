@@ -12,7 +12,9 @@ public class CarModelValidator : AbstractValidator<CarModel>
     /// ctor
     /// </summary>
     public CarModelValidator()
-    {
+    {   
+        Include(new CarCreateModelValidator());
+        
         RuleFor(x => x.Id)
             .NotEmpty()
             .WithMessage("Автомобиль обязателен");

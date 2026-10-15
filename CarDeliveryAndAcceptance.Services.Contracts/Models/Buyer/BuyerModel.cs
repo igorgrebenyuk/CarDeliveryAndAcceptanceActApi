@@ -3,7 +3,7 @@
 /// <summary>
 /// Представляет модель покупателя
 /// </summary>
-public class BuyerModel
+public class BuyerModel : BuyerCreateModel
 {
     /// <summary>
     /// Идентификатор
