@@ -24,8 +24,6 @@ public class AcceptanceActRepositoryTests : CarDeliveryAndAcceptanceContextInMem
 
     /// <summary>
     /// Создаёт акт вместе со связанными City, Buyer, Salesman и Car и добавляет всё в контекст.
-    /// Связанные сущности обязательны: репозиторий делает Include по обязательным связям,
-    /// и акт без них в выборку не попадёт.
     /// </summary>
     private async Task<AcceptanceAct> CreateActAsync(DateTimeOffset? deletedAt = null)
     {

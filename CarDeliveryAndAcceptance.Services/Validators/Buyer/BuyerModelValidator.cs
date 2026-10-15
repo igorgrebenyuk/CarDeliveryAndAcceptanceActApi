@@ -7,12 +7,16 @@ namespace CarDeliveryAndAcceptance.Services.Validators.Buyer;
 /// Валидатор для <see cref="BuyerModel"/>
 /// </summary>
 public class BuyerModelValidator : AbstractValidator<BuyerModel>
-{
+{   
+    
+        
     /// <summary>
     /// ctor
     /// </summary>
     public BuyerModelValidator()
     {
+        Include(new BuyerCreateModelValidator());
+        
         RuleFor(x => x.Id)
             .NotEmpty()
             .WithMessage("Покупатель обязателен");

@@ -12,7 +12,9 @@ public class CityModelValidator : AbstractValidator<CityModel>
     /// ctor
     /// </summary>
     public CityModelValidator()
-    {
+    {   
+        Include(new CityCreateModelValidator());
+        
         RuleFor(x => x.Id)
             .NotEmpty()
             .WithMessage("Город обязателен");
