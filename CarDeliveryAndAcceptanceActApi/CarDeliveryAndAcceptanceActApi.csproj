@@ -18,4 +18,13 @@
     <PackageReference Include="Swashbuckle.AspNetCore.SwaggerUI" Version="10.2.3" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\CarDeliveryAndAcceptance.Repositories.Contracts\CarDeliveryAndAcceptance.Repositories.Contracts.csproj" />
+    <ProjectReference Include="..\CarDeliveryAndAcceptance.Repositories\CarDeliveryAndAcceptance.Repositories.csproj" />
+    <ProjectReference Include="..\CarDeliveryAndAcceptance.Services.Contracts\CarDeliveryAndAcceptance.Services.Contracts.csproj" />
+    <ProjectReference Include="..\CarDeliveryAndAcceptance.Services\CarDeliveryAndAcceptance.Services.csproj" />
+    <ProjectReference Include="..\DataAccessLayer\CarDeliveryAndAcceptance.Context\CarDeliveryAndAcceptance.Context.csproj" />
+    <ProjectReference Include="..\DataAccessLayer\CarDeliveryAndAcceptance.Dal.Contracts\CarDeliveryAndAcceptance.Dal.Contracts.csproj" />
+  </ItemGroup>
+
 </Project>

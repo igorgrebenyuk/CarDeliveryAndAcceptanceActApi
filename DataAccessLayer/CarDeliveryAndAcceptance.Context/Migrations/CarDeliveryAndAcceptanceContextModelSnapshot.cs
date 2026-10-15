@@ -70,7 +70,7 @@ namespace CarDeliveryAndAcceptance.Context.Migrations
 
                     b.HasIndex("SalesmanId");
 
-                    b.HasIndex("CarId", "BuyerId", "SalesmanId", "DateOfCreation")
+                    b.HasIndex("CarId", "BuyerId", "SalesmanId")
                         .IsUnique()
                         .HasDatabaseName("IX_AcceptanceActs")
                         .HasFilter("\"DeletedAt\" IS NULL");
@@ -84,21 +84,6 @@ namespace CarDeliveryAndAcceptance.Context.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uuid");
 
-                    b.Property<string>("BuyerFirstName")
-                        .IsRequired()
-                        .HasMaxLength(100)
-                        .HasColumnType("character varying(100)");
-
-                    b.Property<string>("BuyerName")
-                        .IsRequired()
-                        .HasMaxLength(150)
-                        .HasColumnType("character varying(150)");
-
-                    b.Property<string>("BuyerSurname")
-                        .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("character varying(50)");
-
                     b.Property<DateTimeOffset>("CreatedAt")
                         .HasColumnType("timestamp with time zone");
 
@@ -110,6 +95,21 @@ namespace CarDeliveryAndAcceptance.Context.Migrations
                     b.Property<DateTimeOffset?>("DeletedAt")
                         .HasColumnType("timestamp with time zone");
 
+                    b.Property<string>("FirstName")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("character varying(100)");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(150)
+                        .HasColumnType("character varying(150)");
+
+                    b.Property<string>("Surname")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("character varying(50)");
+
                     b.Property<DateTimeOffset>("UpdatedAt")
                         .HasColumnType("timestamp with time zone");
 
@@ -120,7 +120,7 @@ namespace CarDeliveryAndAcceptance.Context.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("BuyerName", "BuyerFirstName", "BuyerSurname")
+                    b.HasIndex("Name", "FirstName", "Surname")
                         .IsUnique()
                         .HasDatabaseName("IX_Buyers_FullName")
                         .HasFilter("\"DeletedAt\" IS NULL");
@@ -217,11 +217,6 @@ namespace CarDeliveryAndAcceptance.Context.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uuid");
 
-                    b.Property<string>("CityName")
-                        .IsRequired()
-                        .HasMaxLength(100)
-                        .HasColumnType("character varying(100)");
-
                     b.Property<DateTimeOffset>("CreatedAt")
                         .HasColumnType("timestamp with time zone");
 
@@ -233,6 +228,11 @@ namespace CarDeliveryAndAcceptance.Context.Migrations
                     b.Property<DateTimeOffset?>("DeletedAt")
                         .HasColumnType("timestamp with time zone");
 
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("character varying(100)");
+
                     b.Property<DateTimeOffset>("UpdatedAt")
                         .HasColumnType("timestamp with time zone");
 
@@ -243,7 +243,7 @@ namespace CarDeliveryAndAcceptance.Context.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("CityName")
+                    b.HasIndex("Name")
                         .IsUnique()
                         .HasDatabaseName("IX_Cities_CityName")
                         .HasFilter("\"DeletedAt\" IS NULL");
@@ -268,17 +268,17 @@ namespace CarDeliveryAndAcceptance.Context.Migrations
                     b.Property<DateTimeOffset?>("DeletedAt")
                         .HasColumnType("timestamp with time zone");
 
-                    b.Property<string>("SalesmanFirstName")
+                    b.Property<string>("FirstName")
                         .IsRequired()
                         .HasMaxLength(100)
                         .HasColumnType("character varying(100)");
 
-                    b.Property<string>("SalesmanName")
+                    b.Property<string>("Name")
                         .IsRequired()
                         .HasMaxLength(150)
                         .HasColumnType("character varying(150)");
 
-                    b.Property<string>("SalesmanSurname")
+                    b.Property<string>("Surname")
                         .IsRequired()
                         .HasMaxLength(50)
                         .HasColumnType("character varying(50)");
@@ -293,7 +293,7 @@ namespace CarDeliveryAndAcceptance.Context.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("SalesmanName", "SalesmanFirstName", "SalesmanSurname")
+                    b.HasIndex("Name", "FirstName", "Surname")
                         .IsUnique()
                         .HasDatabaseName("IX_Salesmen_FullName")
                         .HasFilter("\"DeletedAt\" IS NULL");

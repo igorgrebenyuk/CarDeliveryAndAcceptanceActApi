@@ -6,7 +6,6 @@
     <Project Path="DataAccessLayer/CarDeliveryAndAcceptance.Context/CarDeliveryAndAcceptance.Context.csproj" />
     <Project Path="DataAccessLayer/CarDeliveryAndAcceptance.Dal.Contracts/CarDeliveryAndAcceptance.Dal.Contracts.csproj" />
   </Folder>
-  <Project Path="CarDelivery&amp;AcceptanceActApi/CarDelivery&amp;AcceptanceActApi.csproj" />
   <Project Path="CarDeliveryAndAcceptance.Common/CarDeliveryAndAcceptance.Common.csproj" />
   <Project Path="CarDeliveryAndAcceptance.Entities.Configurations/CarDeliveryAndAcceptance.Entities.Configurations.csproj" />
   <Project Path="CarDeliveryAndAcceptance.Entities/CarDeliveryAndAcceptance.Entities.csproj" />
@@ -16,4 +15,5 @@
   <Project Path="CarDeliveryAndAcceptance.Services.Contracts/CarDeliveryAndAcceptance.Services.Contracts.csproj" />
   <Project Path="CarDeliveryAndAcceptance.Services.Tests/CarDeliveryAndAcceptance.Services.Tests.csproj" />
   <Project Path="CarDeliveryAndAcceptance.Services/CarDeliveryAndAcceptance.Services.csproj" />
+  <Project Path="CarDeliveryAndAcceptanceActApi/CarDeliveryAndAcceptanceActApi.csproj" />
 </Solution>

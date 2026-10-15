@@ -7,7 +7,6 @@
     </PropertyGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\CarDelivery&amp;AcceptanceActApi\CarDelivery&amp;AcceptanceActApi.csproj" />
       <ProjectReference Include="..\DataAccessLayer\CarDeliveryAndAcceptance.Dal.Contracts\CarDeliveryAndAcceptance.Dal.Contracts.csproj" />
     </ItemGroup>
 
