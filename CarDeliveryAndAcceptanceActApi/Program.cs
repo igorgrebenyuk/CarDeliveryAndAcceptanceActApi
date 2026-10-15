@@ -1,5 +1,7 @@
 using CarDelivery_AcceptanceActApi.Api.Automapper;
 using CarDelivery_AcceptanceActApi.Implementations;
+using CarDelivery_AcceptanceActApi.Implementations;
+using CarDelivery_AcceptanceActApi.Infrastructure;
 using CarDeliveryAndAcceptance.Common;
 using CarDeliveryAndAcceptance.Context;
 using CarDeliveryAndAcceptance.Dal.Contracts.Repositories;
@@ -8,6 +10,8 @@ using CarDeliveryAndAcceptance.Repositories.Contracts;
 using CarDeliveryAndAcceptance.Services;
 using CarDeliveryAndAcceptance.Services.Automapper;
 using CarDeliveryAndAcceptance.Services.Contracts;
+using CarDeliveryAndAcceptance.Services.Validators.Car;
+using FluentValidation;
 using Microsoft.EntityFrameworkCore;
 
 

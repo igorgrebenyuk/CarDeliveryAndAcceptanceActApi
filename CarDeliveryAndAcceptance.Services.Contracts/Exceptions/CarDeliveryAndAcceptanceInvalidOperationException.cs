@@ -1,0 +1,3 @@
+﻿namespace CarDeliveryAndAcceptance.Services.Contracts.Exceptions;
+
+public class CarDeliveryAndAcceptanceInvalidOperationException(string message) : CarDeliveryAndAcceptanceException(message);
