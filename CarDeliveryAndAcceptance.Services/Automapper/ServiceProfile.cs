@@ -54,6 +54,19 @@ public class ServiceProfile : Profile
         CreateMap<AcceptanceAct, AcceptanceActModel>()
             .ForMember(dest => dest.DateOfCreation, opt => opt.MapFrom(src => src.CreatedAt));
 
+        CreateMap<AcceptanceAct, AcceptanceActListItemModel>()
+            .ForMember(dest => dest.DateOfCreation, opt => opt.MapFrom(src => src.CreatedAt))
+            .ForMember(dest => dest.CityName, opt => opt.MapFrom(src => src.City.Name))
+            .ForMember(dest => dest.BuyerFullName,
+                opt => opt.MapFrom(src =>
+                    $"Компания: {src.Buyer.Name}, имя: {src.Buyer.FirstName}, фамилия: {src.Buyer.Surname}"))
+            .ForMember(dest => dest.SalesmanFullName,
+                opt => opt.MapFrom(src =>
+                    $"Компания: {src.Salesman.Name}, имя: {src.Salesman.FirstName}, фамилия: {src.Salesman.Surname}"))
+            .ForMember(dest => dest.CarMark, opt => opt.MapFrom(src => src.Car.Mark))
+            .ForMember(dest => dest.CarModel, opt => opt.MapFrom(src => src.Car.Model))
+            .ForMember(dest => dest.CarLicensePlate, opt => opt.MapFrom(src => src.Car.LicensePlate));
+
         CreateMap<AcceptanceActCreateModel, AcceptanceAct>();
 
         CreateMap<AcceptanceActUpdateModel, AcceptanceAct>()

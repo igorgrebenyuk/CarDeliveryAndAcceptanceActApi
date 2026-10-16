@@ -8,7 +8,7 @@ namespace CarDelivery_AcceptanceActApi.Models.AcceptanceAct;
 /// <summary>
 /// Модель акта приёма-передачи (ответ API)
 /// </summary>
-public class AcceptanceActApiModel : AcceptanceActCreateApiModel
+public class AcceptanceActApiModel 
 {
     /// <summary>
     /// Идентификатор

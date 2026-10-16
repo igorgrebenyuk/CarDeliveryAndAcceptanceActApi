@@ -36,10 +36,10 @@ public class AcceptanceActService : IAcceptanceActService
         this.mapper = mapper;
     }
     
-    async Task<IReadOnlyCollection<AcceptanceActModel>> IAcceptanceActService.GetAcceptanceActsAsync(CancellationToken cancellationToken)
+    async Task<IReadOnlyCollection<AcceptanceActListItemModel>> IAcceptanceActService.GetAcceptanceActsAsync(CancellationToken cancellationToken)
     {
         var result = await acceptanceActRepository.GetAcceptanceActsAsync(cancellationToken);
-        return mapper.Map<IReadOnlyCollection<AcceptanceActModel>>(result);
+        return mapper.Map<IReadOnlyCollection<AcceptanceActListItemModel>>(result);
     }
 
     async Task<AcceptanceActModel> IAcceptanceActService.GetAcceptanceActByIdAsync(Guid id, CancellationToken cancellationToken)

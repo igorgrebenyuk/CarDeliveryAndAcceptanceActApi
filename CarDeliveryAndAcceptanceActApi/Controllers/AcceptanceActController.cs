@@ -34,14 +34,14 @@ public class AcceptanceActController : ControllerBase
     }
 
     /// <summary>
-    /// Получить все акты
+    /// Получить все акты (краткая информация)
     /// </summary>
     [HttpGet]
-    [ProducesResponseType<IReadOnlyCollection<AcceptanceActApiModel>>(StatusCodes.Status200OK)]
+    [ProducesResponseType<IReadOnlyCollection<AcceptanceActListItemApiModel>>(StatusCodes.Status200OK)]
     public async Task<IActionResult> Get(CancellationToken cancellationToken)
     {
         var result = await acceptanceActService.GetAcceptanceActsAsync(cancellationToken);
-        return Ok(mapper.Map<IReadOnlyCollection<AcceptanceActApiModel>>(result));
+        return Ok(mapper.Map<IReadOnlyCollection<AcceptanceActListItemApiModel>>(result));
     }
 
     /// <summary>
@@ -60,7 +60,6 @@ public class AcceptanceActController : ControllerBase
     /// <summary>
     /// Создать акт
     /// </summary>
-    /// <remarks>Город, покупатель, продавец и автомобиль должны существовать, иначе вернётся 404</remarks>
     [HttpPost]
     [ProducesResponseType<AcceptanceActApiModel>(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]

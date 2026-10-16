@@ -33,7 +33,7 @@ public class ApiProfile : Profile
     {
         CreateMap<CityModel, CityApiModel>();
         CreateMap<CityCreateApiModel, CityCreateModel>();
-        CreateMap<CityCreateApiModel, CityModel>(); // для PUT: Id подставляется в контроллере
+        CreateMap<CityCreateApiModel, CityModel>(); 
     }
  
     private void CreateMapForBuyer()
@@ -59,9 +59,9 @@ public class ApiProfile : Profile
  
     private void CreateMapForAcceptanceAct()
     {
-        // Вложенные City/Buyer/Salesman/Car маппятся автоматически маппами выше
         CreateMap<AcceptanceActModel, AcceptanceActApiModel>();
+        CreateMap<AcceptanceActListItemModel, AcceptanceActListItemApiModel>();
         CreateMap<AcceptanceActCreateApiModel, AcceptanceActCreateModel>();
-        CreateMap<AcceptanceActCreateApiModel, AcceptanceActUpdateModel>(); // для PUT: Id из маршрута
+        CreateMap<AcceptanceActCreateApiModel, AcceptanceActUpdateModel>();
     }
 }
