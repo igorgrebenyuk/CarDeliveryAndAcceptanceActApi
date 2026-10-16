@@ -8,10 +8,16 @@ using Xunit;
 
 namespace CarDeliveryAndAcceptance.Api.Tests;
 
+/// <summary>
+/// Тесты проверки зависимостей API
+/// </summary>
 public class DependenciesTests: IClassFixture<WebApplicationFactory<Program>>
 {
     private readonly WebApplicationFactory<Program> factory;
-
+    
+    /// <summary>
+    /// Инициализирует новый экземпляр <see cref="DependenciesTests"/>
+    /// </summary>
     public DependenciesTests(WebApplicationFactory<Program> factory)
     {
         this.factory = factory.WithWebHostBuilder(builder => builder.ConfigureTestAppConfiguration());

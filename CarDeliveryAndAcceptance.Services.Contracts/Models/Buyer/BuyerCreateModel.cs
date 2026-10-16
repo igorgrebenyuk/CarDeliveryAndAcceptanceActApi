@@ -1,5 +1,8 @@
 ﻿namespace CarDeliveryAndAcceptance.Services.Contracts.Models.Buyer;
 
+/// <summary>
+/// Модель создания покупателя
+/// </summary>
 public class BuyerCreateModel
 {
     /// <summary>

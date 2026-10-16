@@ -1,5 +1,9 @@
 ﻿namespace CarDeliveryAndAcceptanceActApi.Models.Buyer;
 
+
+/// <summary>
+/// Модель покупателя
+/// </summary>
 public class BuyerApiModel : BuyerCreateApiModel
 {
     /// <summary>

@@ -8,7 +8,10 @@ namespace CarDeliveryAndAcceptance.Context;
 /// Фабрика для создания контекста в DesignTime
 /// </summary>
 public class CarDeliveryAndAcceptanceDesignTimeContextFactory : IDesignTimeDbContextFactory<CarDeliveryAndAcceptanceContext>
-{
+{   
+    /// <summary>
+    /// ctor
+    /// </summary>
     public CarDeliveryAndAcceptanceContext CreateDbContext(string[] args)
     {
         /// <summary>

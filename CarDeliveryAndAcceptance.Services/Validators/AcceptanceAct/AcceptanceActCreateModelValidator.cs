@@ -3,8 +3,14 @@ using FluentValidation;
 
 namespace CarDeliveryAndAcceptance.Services.Validators.AcceptanceAct;
 
+/// <summary>
+/// Валидатор для <see cref="AcceptanceActCreateModel"/>
+/// </summary>
 public class AcceptanceActCreateModelValidator : AbstractValidator<AcceptanceActCreateModel>
-{
+{   
+    /// <summary>
+    /// ctor
+    /// </summary>
     public AcceptanceActCreateModelValidator()
     {
         RuleFor(x => x.CityId)

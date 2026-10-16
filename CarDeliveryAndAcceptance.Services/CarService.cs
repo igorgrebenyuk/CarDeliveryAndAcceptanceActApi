@@ -8,13 +8,19 @@ using CarDeliveryAndAcceptance.Services.Contracts.Models.Car;
 
 namespace CarDeliveryAndAcceptance.Services;
 
+
+/// <summary>
+/// Реализация <see cref="ICarService"/>
+/// </summary>
 public class CarService : ICarService
 {
     private readonly IMapper mapper;
     private readonly IUnitOfWork unitOfWork;
     private readonly ICarRepository carRepository;
     
-    
+    /// <summary>
+    /// Инициализирует новый экземпляр <see cref="CarService"/>
+    /// </summary>
     public CarService(ICarRepository carRepository, IUnitOfWork unitOfWork, IMapper mapper)
     {
         this.carRepository = carRepository;

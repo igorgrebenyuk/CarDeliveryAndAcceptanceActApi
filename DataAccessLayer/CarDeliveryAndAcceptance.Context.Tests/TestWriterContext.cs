@@ -4,6 +4,9 @@ using Moq;
 
 namespace CarDeliveryAndAcceptance.Context.Tests;
 
+/// <summary>
+/// Тестовый контекст записи с подменёнными провайдерами времени и пользователя
+/// </summary>
 public class TestWriterContext : IDbWriterContext
 {
     private readonly Mock<IDateTimeProvider> dateTimeProviderMock;

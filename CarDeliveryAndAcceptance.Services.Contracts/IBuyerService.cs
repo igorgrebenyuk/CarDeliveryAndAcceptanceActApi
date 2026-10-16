@@ -2,6 +2,9 @@
 
 namespace CarDeliveryAndAcceptance.Services.Contracts;
 
+/// <summary>
+/// Сервис для работы с покупателями
+/// </summary>
 public interface IBuyerService
 {
     /// <summary>

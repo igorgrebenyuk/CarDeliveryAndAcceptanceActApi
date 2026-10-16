@@ -2,6 +2,9 @@
 
 namespace CarDeliveryAndAcceptance.Services.Contracts;
 
+/// <summary>
+/// Сервис для работы с актами приёма-передачи
+/// </summary>
 public interface IAcceptanceActService
 {
     /// <summary>

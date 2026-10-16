@@ -2,6 +2,9 @@
 
 namespace CarDeliveryAndAcceptance.Dal.Contracts;
 
+/// <summary>
+/// Базовая сущность с идентификатором и аудитом создания, изменения и удаления
+/// </summary>
 public abstract class BaseAuditEntity : 
     IEntity,
     IEntityWithId,

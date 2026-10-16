@@ -2,6 +2,9 @@
 
 namespace CarDeliveryAndAcceptanceActApi.Models;
 
+/// <summary>
+/// Детали ошибки валидации для ответа API
+/// </summary>
 public class ApiValidationExceptionDetail
 {
     /// <summary>

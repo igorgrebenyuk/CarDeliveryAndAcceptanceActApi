@@ -2,6 +2,9 @@
 
 namespace CarDeliveryAndAcceptance.Dal.Contracts.Repositories;
 
+/// <summary>
+/// Контекст записи: объединяет писателя сущностей и провайдеры времени и пользователя для аудита
+/// </summary>
 public interface IDbWriterContext
 {
     /// <inheritdoc cref="IWriter"/>

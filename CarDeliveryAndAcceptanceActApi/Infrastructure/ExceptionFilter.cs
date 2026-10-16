@@ -5,6 +5,9 @@ using Microsoft.AspNetCore.Mvc.Filters;
 
 namespace CarDeliveryAndAcceptanceActApi.Infrastructure;
 
+/// <summary>
+/// Фильтр, преобразующий исключения приложения в HTTP-ответы
+/// </summary>
 public class ExceptionFilter : IExceptionFilter
 {
     /// <inheritdoc />

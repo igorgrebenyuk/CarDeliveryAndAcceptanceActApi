@@ -3,6 +3,9 @@ using CarDeliveryAndAcceptance.Services.Contracts.Models.Car;
 
 namespace CarDeliveryAndAcceptance.Services.Contracts;
 
+/// <summary>
+/// Сервис для работы с автомобилями
+/// </summary>
 public interface ICarService
 {
     /// <summary>

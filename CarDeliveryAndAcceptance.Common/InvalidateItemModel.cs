@@ -1,5 +1,8 @@
 ﻿namespace CarDeliveryAndAcceptance.Common;
 
+/// <summary>
+/// Модель элемента невалидности
+/// </summary>
 public class InvalidateItemModel
 {
     /// <summary>

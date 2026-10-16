@@ -3,6 +3,9 @@ using CarDeliveryAndAcceptance.Services.Contracts.Models.Salesman;
 
 namespace CarDeliveryAndAcceptance.Services.Contracts;
 
+/// <summary>
+/// Сервис для работы с продавцами
+/// </summary>
 public interface ISalesmanService
 {
     /// <summary>

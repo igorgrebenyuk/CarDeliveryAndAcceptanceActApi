@@ -1,5 +1,8 @@
 ﻿namespace CarDeliveryAndAcceptanceActApi.Models;
 
+/// <summary>
+/// Детали ошибки для ответа API
+/// </summary>
 public class ApiExceptionDetail
 {
     /// <summary>

@@ -8,7 +8,10 @@ namespace CarDeliveryAndAcceptance.Services.Validators.Salesman;
 /// Валидатор для <see cref="SalesmanCreateModel"/>
 /// </summary>
 public class SalesmanCreateModelValidator : AbstractValidator<SalesmanCreateModel>
-{
+{   
+    /// <summary>
+    /// ctor
+    /// </summary>
     public SalesmanCreateModelValidator()
     {
         RuleFor(x => x.Name)

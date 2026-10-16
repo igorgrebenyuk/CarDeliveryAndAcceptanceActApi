@@ -1,5 +1,8 @@
 ﻿namespace CarDeliveryAndAcceptance.Services.Contracts.Models.City;
 
+/// <summary>
+/// Модель создания города
+/// </summary>
 public class CityCreateModel
 {
     

@@ -1,5 +1,8 @@
 ﻿namespace CarDeliveryAndAcceptance.Services.Contracts.Models.AcceptanceAct;
 
+/// <summary>
+/// Модель создания акта приёма-передачи
+/// </summary>
 public class AcceptanceActCreateModel
 {
     /// <summary>
