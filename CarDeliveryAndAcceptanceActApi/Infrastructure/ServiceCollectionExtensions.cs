@@ -1,7 +1,7 @@
 ﻿using System.Reflection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 
-namespace CarDelivery_AcceptanceActApi.Infrastructure;
+namespace CarDeliveryAndAcceptanceActApi.Infrastructure;
 
 public static class ServiceCollectionExtensions
 {

@@ -1,16 +1,16 @@
 ﻿using AutoMapper;
-using CarDelivery_AcceptanceActApi.Models.AcceptanceAct;
-using CarDelivery_AcceptanceActApi.Models.Buyer;
-using CarDelivery_AcceptanceActApi.Models.Car;
-using CarDelivery_AcceptanceActApi.Models.City;
-using CarDelivery_AcceptanceActApi.Models.Salesman;
 using CarDeliveryAndAcceptance.Services.Contracts.Models.AcceptanceAct;
 using CarDeliveryAndAcceptance.Services.Contracts.Models.Buyer;
 using CarDeliveryAndAcceptance.Services.Contracts.Models.Car;
 using CarDeliveryAndAcceptance.Services.Contracts.Models.City;
 using CarDeliveryAndAcceptance.Services.Contracts.Models.Salesman;
+using CarDeliveryAndAcceptanceActApi.Models.AcceptanceAct;
+using CarDeliveryAndAcceptanceActApi.Models.Buyer;
+using CarDeliveryAndAcceptanceActApi.Models.Car;
+using CarDeliveryAndAcceptanceActApi.Models.City;
+using CarDeliveryAndAcceptanceActApi.Models.Salesman;
 
-namespace CarDelivery_AcceptanceActApi.Api.Automapper;
+namespace CarDeliveryAndAcceptanceActApi.Api.Automapper;
 
 /// <summary>
 /// Профиль маппера API: преобразование между API-моделями и моделями сервисов

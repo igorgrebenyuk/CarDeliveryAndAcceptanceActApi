@@ -2,7 +2,7 @@
 using CarDeliveryAndAcceptance.Services.Contracts.Exceptions;
 using FluentValidation;
 
-namespace CarDelivery_AcceptanceActApi.Implementations;
+namespace CarDeliveryAndAcceptanceActApi.Implementations;
 
 
 /// <summary>

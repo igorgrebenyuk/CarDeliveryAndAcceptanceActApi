@@ -1,6 +1,6 @@
-using CarDelivery_AcceptanceActApi.Api.Automapper;
-using CarDelivery_AcceptanceActApi.Implementations;
-using CarDelivery_AcceptanceActApi.Infrastructure;
+using CarDeliveryAndAcceptanceActApi.Api.Automapper;
+using CarDeliveryAndAcceptanceActApi.Implementations;
+using CarDeliveryAndAcceptanceActApi.Infrastructure;
 using CarDeliveryAndAcceptance.Common;
 using CarDeliveryAndAcceptance.Context;
 using CarDeliveryAndAcceptance.Dal.Contracts.Repositories;

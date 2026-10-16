@@ -1,4 +1,4 @@
-﻿namespace CarDelivery_AcceptanceActApi.Models.AcceptanceAct;
+﻿namespace CarDeliveryAndAcceptanceActApi.Models.AcceptanceAct;
 
 /// <summary>
 /// Краткая модель акта приёма-передачи для списка

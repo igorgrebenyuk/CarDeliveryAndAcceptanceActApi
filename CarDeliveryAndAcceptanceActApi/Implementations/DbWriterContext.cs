@@ -1,7 +1,7 @@
 ﻿using CarDeliveryAndAcceptance.Common;
 using CarDeliveryAndAcceptance.Dal.Contracts.Repositories;
 
-namespace CarDelivery_AcceptanceActApi.Implementations;
+namespace CarDeliveryAndAcceptanceActApi.Implementations;
 
 /// <summary>
 /// Контекст записи данных: объединяет писателя, поставщик времени и поставщик идентичности

@@ -1,9 +1,9 @@
-﻿using CarDelivery_AcceptanceActApi.Models.Buyer;
-using CarDelivery_AcceptanceActApi.Models.Car;
-using CarDelivery_AcceptanceActApi.Models.City;
-using CarDelivery_AcceptanceActApi.Models.Salesman;
+﻿using CarDeliveryAndAcceptanceActApi.Models.Buyer;
+using CarDeliveryAndAcceptanceActApi.Models.Car;
+using CarDeliveryAndAcceptanceActApi.Models.City;
+using CarDeliveryAndAcceptanceActApi.Models.Salesman;
 
-namespace CarDelivery_AcceptanceActApi.Models.AcceptanceAct;
+namespace CarDeliveryAndAcceptanceActApi.Models.AcceptanceAct;
 
 /// <summary>
 /// Модель акта приёма-передачи (ответ API)
