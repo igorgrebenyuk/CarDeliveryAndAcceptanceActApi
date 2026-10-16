@@ -1,6 +1,0 @@
-@CarDelivery_AcceptanceActApi_HostAddress = http://localhost:5189
-
-GET {{CarDelivery_AcceptanceActApi_HostAddress}}/weatherforecast/
-Accept: application/json
-
-###
