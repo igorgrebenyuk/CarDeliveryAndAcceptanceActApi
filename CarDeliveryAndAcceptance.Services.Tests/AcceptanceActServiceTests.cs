@@ -81,7 +81,49 @@ public class AcceptanceActServiceTests : CarDeliveryAndAcceptanceContextInMemory
             .And.ContainSingle(x => x.Id == first.Id)
             .And.ContainSingle(x => x.Id == second.Id);
     }
+    
+    /// <summary>
+    /// GetAcceptanceActsAsync возвращает краткую информацию об акте, собранную из связанных сущностей
+    /// </summary>
+    [Fact]
+    public async Task GetAcceptanceActsShouldReturnShortInfoFromRelatedEntities()
+    {
+        // Arrange
+        var related = await AddRelatedAsync();
+        var act = TestEntityProvider.Shared.Create<AcceptanceAct>(x => x.DeletedAt = null);
+        act.CityId = related.City.Id;
+        act.City = null!;
+        act.BuyerId = related.Buyer.Id;
+        act.Buyer = null!;
+        act.SalesmanId = related.Salesman.Id;
+        act.Salesman = null!;
+        act.CarId = related.Car.Id;
+        act.Car = null!;
+        Context.Add(act);
+        await UnitOfWork.SaveChangesAsync(CancellationToken.None);
+        Context.ChangeTracker.Clear();
 
+        // Act
+        var items = await acceptanceActService.GetAcceptanceActsAsync(CancellationToken.None);
+
+        // Assert
+        var item = items.Should().ContainSingle().Subject;
+        item.Id.Should().Be(act.Id);
+        item.DateOfCreation.Should().Be(act.CreatedAt);
+        item.CityName.Should().Be(related.City.Name);
+        item.CarMark.Should().Be(related.Car.Mark);
+        item.CarModel.Should().Be(related.Car.Model);
+        item.CarLicensePlate.Should().Be(related.Car.LicensePlate);
+        item.BuyerFullName.Should()
+            .Contain(related.Buyer.Name)
+            .And.Contain(related.Buyer.FirstName)
+            .And.Contain(related.Buyer.Surname);
+        item.SalesmanFullName.Should()
+            .Contain(related.Salesman.Name)
+            .And.Contain(related.Salesman.FirstName)
+            .And.Contain(related.Salesman.Surname);
+    }
+    
     /// <summary>
     /// GetAcceptanceActByIdAsync возвращает акт вместе со связанными сущностями
     /// </summary>

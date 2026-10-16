@@ -57,6 +57,7 @@ builder.Services.AddScoped<IWriter>(x => x.GetRequiredService<CarDeliveryAndAcce
 
 // ExceptionFilter 
 var controllers = builder.Services.AddControllers(opts => opts.Filters.Add<ExceptionFilter>());
+
 if (builder.Environment.IsEnvironment("integration"))
 {
     controllers.AddControllersAsServices();

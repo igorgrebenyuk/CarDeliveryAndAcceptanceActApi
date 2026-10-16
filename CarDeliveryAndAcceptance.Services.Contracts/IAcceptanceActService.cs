@@ -7,7 +7,7 @@ public interface IAcceptanceActService
     /// <summary>
     /// Получение всех актов
     /// </summary>
-    Task<IReadOnlyCollection<AcceptanceActModel>> GetAcceptanceActsAsync(CancellationToken cancellationToken);
+    Task<IReadOnlyCollection<AcceptanceActListItemModel>> GetAcceptanceActsAsync(CancellationToken cancellationToken);
     
     
     /// <summary>
