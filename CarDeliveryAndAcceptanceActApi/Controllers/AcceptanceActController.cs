@@ -18,6 +18,7 @@ public class AcceptanceActController : ControllerBase
     private readonly IAcceptanceActService acceptanceActService;
     private readonly IMapper mapper;
     private readonly IValidateService validateService;
+    private readonly IAcceptanceActExcelService acceptanceActExcelService;
 
     /// <summary>
     /// ctor
@@ -25,10 +26,12 @@ public class AcceptanceActController : ControllerBase
     /// <param name="acceptanceActService">Сервис работы с актами</param>
     /// <param name="mapper">Маппер для преобразования моделей</param>
     /// <param name="validateService">Сервис валидации моделей</param>
-    public AcceptanceActController(IAcceptanceActService acceptanceActService, IMapper mapper,
+    public AcceptanceActController(IAcceptanceActService acceptanceActService,IAcceptanceActExcelService acceptanceActExcelService,
+        IMapper mapper,
         IValidateService validateService)
     {
         this.acceptanceActService = acceptanceActService;
+        this.acceptanceActExcelService = acceptanceActExcelService;
         this.mapper = mapper;
         this.validateService = validateService;
     }
@@ -104,5 +107,23 @@ public class AcceptanceActController : ControllerBase
     {
         await acceptanceActService.DeleteAcceptanceActAsync(id, cancellationToken);
         return NoContent();
+    }
+
+
+    /// <summary>
+    /// Получить Excel-файл по акту
+    /// </summary>
+    [HttpGet("{id:guid}/excel")]
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    public async Task<IActionResult> GetExcel([SwaggerParameter("Идентификатор акта")] Guid id,
+        CancellationToken cancellationToken)
+    {
+        var act = await acceptanceActService.GetAcceptanceActByIdAsync(id, cancellationToken);
+        var stream = await acceptanceActExcelService.GenerateAcceptanceActExcelAsync(act, cancellationToken);
+        return File(
+            stream,
+            "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+            $"acceptance-act-{id}.xlsx");
     }
 }

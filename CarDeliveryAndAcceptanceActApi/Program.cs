@@ -41,6 +41,7 @@ builder.Services.AddScoped<ICarService, CarService>();
 builder.Services.AddScoped<IBuyerService, BuyerService>();
 builder.Services.AddScoped<ISalesmanService, SalesmanService>();
 builder.Services.AddScoped<IAcceptanceActService, AcceptanceActService>();
+builder.Services.AddScoped<IAcceptanceActExcelService, AcceptanceActExcelService>();
 
 builder.Services.AddAutoMapper(x =>
 {
