@@ -4,12 +4,11 @@ using CarDeliveryAndAcceptance.Api.Tests.Infrastructure;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Testing;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.VisualStudio.TestPlatform.TestHost;
 using Xunit;
 
 namespace CarDeliveryAndAcceptance.Api.Tests;
 
-public class DependenciesTests
+public class DependenciesTests: IClassFixture<WebApplicationFactory<Program>>
 {
     private readonly WebApplicationFactory<Program> factory;
 

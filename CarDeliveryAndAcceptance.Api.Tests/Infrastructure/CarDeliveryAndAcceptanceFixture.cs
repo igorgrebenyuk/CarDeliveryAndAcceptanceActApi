@@ -11,7 +11,7 @@ public class CarDeliveryAndAcceptanceFixture: IAsyncLifetime
     private bool disposed;
 
         /// <summary>
-        /// Инициализирует новый экземпляр <see cref="ActPurchaseApiFixture"/>
+        /// Инициализирует новый экземпляр <see cref="CarDeliveryAndAcceptanceFixture"/>
         /// </summary>
         public CarDeliveryAndAcceptanceFixture()
         {

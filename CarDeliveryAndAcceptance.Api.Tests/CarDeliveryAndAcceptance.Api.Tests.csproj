@@ -23,5 +23,8 @@
       <ProjectReference Include="..\DataAccessLayer\CarDeliveryAndAcceptance.Context\CarDeliveryAndAcceptance.Context.csproj" />
     </ItemGroup>
 
+    <ItemGroup>
+        <None Update="appsettings.integration.json" CopyToOutputDirectory="PreserveNewest" />
+    </ItemGroup>
 
 </Project>
