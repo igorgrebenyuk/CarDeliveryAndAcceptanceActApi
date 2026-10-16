@@ -1,12 +1,12 @@
 ﻿using AutoMapper;
-using CarDelivery_AcceptanceActApi.Models.Car;
 using CarDeliveryAndAcceptance.Common;
 using CarDeliveryAndAcceptance.Services.Contracts;
 using CarDeliveryAndAcceptance.Services.Contracts.Models.Car;
+using CarDeliveryAndAcceptanceActApi.Models.Car;
 using Microsoft.AspNetCore.Mvc;
 using Swashbuckle.AspNetCore.Annotations;
 
-namespace CarDelivery_AcceptanceActApi.Controllers;
+namespace CarDeliveryAndAcceptanceActApi.Controllers;
 
 /// <summary>
 /// Автомобили

@@ -1,4 +1,4 @@
-﻿namespace CarDelivery_AcceptanceActApi.Models.Buyer;
+﻿namespace CarDeliveryAndAcceptanceActApi.Models.Buyer;
 
 /// <summary>
 /// Модель создания

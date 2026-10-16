@@ -1,7 +1,7 @@
 ﻿using System.Net;
 using System.Net.Http.Json;
-using CarDelivery_AcceptanceActApi.Models;
-using CarDelivery_AcceptanceActApi.Models.Salesman;
+using CarDeliveryAndAcceptanceActApi.Models;
+using CarDeliveryAndAcceptanceActApi.Models.Salesman;
 using CarDeliveryAndAcceptance.Api.Tests.Infrastructure;
 using CarDeliveryAndAcceptance.Entities;
 using FluentAssertions;

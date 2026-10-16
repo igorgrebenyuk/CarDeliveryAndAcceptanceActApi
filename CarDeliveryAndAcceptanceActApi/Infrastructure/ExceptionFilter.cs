@@ -1,9 +1,9 @@
-﻿using CarDelivery_AcceptanceActApi.Models;
-using CarDeliveryAndAcceptance.Services.Contracts.Exceptions;
+﻿using CarDeliveryAndAcceptance.Services.Contracts.Exceptions;
+using CarDeliveryAndAcceptanceActApi.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
 
-namespace CarDelivery_AcceptanceActApi.Infrastructure;
+namespace CarDeliveryAndAcceptanceActApi.Infrastructure;
 
 public class ExceptionFilter : IExceptionFilter
 {

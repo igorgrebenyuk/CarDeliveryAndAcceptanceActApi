@@ -1,7 +1,7 @@
 ﻿using System.Net;
 using System.Net.Http.Json;
-using CarDelivery_AcceptanceActApi.Models;
-using CarDelivery_AcceptanceActApi.Models.AcceptanceAct;
+using CarDeliveryAndAcceptanceActApi.Models;
+using CarDeliveryAndAcceptanceActApi.Models.AcceptanceAct;
 using CarDeliveryAndAcceptance.Api.Tests.Infrastructure;
 using CarDeliveryAndAcceptance.Entities;
 using FluentAssertions;
@@ -244,7 +244,52 @@ public class AcceptanceActControllerTests : IntegrationTestBase
 
         response.StatusCode.Should().Be(HttpStatusCode.NotFound);
     }
-
+    
+    
+    /// <summary>
+    /// GET /api/acceptance-acts/{id}/excel получить акт в формате excel
+    /// </summary>
+    [Fact]
+    public async Task GetAcceptanceActExcel_ShouldReturnExcelFile()
+    {
+        // Arrange
+        var seeded = await SeedActAsync();
+ 
+        var client = CreateClient();
+ 
+        // Act
+        var response = await client.GetAsync($"/api/acceptance-acts/{seeded.Id}/excel");
+ 
+        // Assert
+        response.StatusCode.Should().Be(HttpStatusCode.OK);
+ 
+        response.Content.Headers.ContentType?.MediaType
+            .Should().Be("application/vnd.openxmlformats-officedocument.spreadsheetml.sheet");
+ 
+        response.Content.Headers.ContentDisposition.Should().NotBeNull();
+        response.Content.Headers.ContentDisposition!.FileName.Should().Contain(".xlsx");
+ 
+        var content = await response.Content.ReadAsByteArrayAsync();
+ 
+        content.Should().NotBeEmpty();
+    }
+ 
+    /// <summary>
+    /// GET /api/acceptance-acts/{id}/excel с несуществующим id возвращает 404
+    /// </summary>
+    [Fact]
+    public async Task GetAcceptanceActExcel_ShouldReturnNotFound_WhenActDoesNotExist()
+    {
+        // Arrange
+        var client = CreateClient();
+ 
+        // Act
+        var response = await client.GetAsync($"/api/acceptance-acts/{Guid.NewGuid()}/excel");
+ 
+        // Assert
+        response.StatusCode.Should().Be(HttpStatusCode.NotFound);
+    }
+    
     private static AcceptanceActCreateApiModel ToRequest(
         (City city, Buyer buyer, Salesman salesman, Car car) deps) => new()
     {
@@ -318,4 +363,6 @@ public class AcceptanceActControllerTests : IntegrationTestBase
         await UnitOfWork.SaveChangesAsync();
         return entity;
     }
+    
+    
 }

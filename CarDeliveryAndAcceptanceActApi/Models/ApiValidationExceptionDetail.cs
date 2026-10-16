@@ -1,6 +1,6 @@
 ﻿using CarDeliveryAndAcceptance.Common;
 
-namespace CarDelivery_AcceptanceActApi.Models;
+namespace CarDeliveryAndAcceptanceActApi.Models;
 
 public class ApiValidationExceptionDetail
 {
