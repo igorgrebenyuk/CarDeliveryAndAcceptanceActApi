@@ -1,12 +1,12 @@
 ﻿using AutoMapper;
-using CarDelivery_AcceptanceActApi.Models.AcceptanceAct;
 using CarDeliveryAndAcceptance.Common;
 using CarDeliveryAndAcceptance.Services.Contracts;
 using CarDeliveryAndAcceptance.Services.Contracts.Models.AcceptanceAct;
+using CarDeliveryAndAcceptanceActApi.Models.AcceptanceAct;
 using Microsoft.AspNetCore.Mvc;
 using Swashbuckle.AspNetCore.Annotations;
 
-namespace CarDelivery_AcceptanceActApi.Controllers;
+namespace CarDeliveryAndAcceptanceActApi.Controllers;
 
 /// <summary>
 /// Акты приёма-передачи автомобилей

@@ -1,6 +1,6 @@
 ﻿using CarDeliveryAndAcceptance.Common;
 
-namespace CarDelivery_AcceptanceActApi.Implementations;
+namespace CarDeliveryAndAcceptanceActApi.Implementations;
 
 public class DateTimeProvider: IDateTimeProvider
 {

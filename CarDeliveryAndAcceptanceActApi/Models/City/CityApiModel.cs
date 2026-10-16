@@ -1,4 +1,4 @@
-﻿namespace CarDelivery_AcceptanceActApi.Models.City;
+﻿namespace CarDeliveryAndAcceptanceActApi.Models.City;
 
 /// <summary>
 /// Модель ответа
