@@ -1,5 +1,8 @@
 ﻿namespace CarDeliveryAndAcceptance.Services.Contracts.Models.Salesman;
 
+/// <summary>
+/// Модель создания продавца
+/// </summary>
 public class SalesmanCreateModel
 {
     /// <summary>

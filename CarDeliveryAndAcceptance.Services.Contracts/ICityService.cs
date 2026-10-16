@@ -3,6 +3,9 @@ using CarDeliveryAndAcceptance.Services.Contracts.Models.City;
 
 namespace CarDeliveryAndAcceptance.Services.Contracts;
 
+/// <summary>
+/// Сервис для работы с городами
+/// </summary>
 public interface ICityService
 {
     /// <summary>

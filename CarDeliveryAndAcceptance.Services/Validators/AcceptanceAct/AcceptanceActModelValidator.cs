@@ -3,8 +3,14 @@ using FluentValidation;
 
 namespace CarDeliveryAndAcceptance.Services.Validators.AcceptanceAct;
 
+/// <summary>
+/// Валидатор для <see cref="AcceptanceActModel"/>
+/// </summary>
 public class AcceptanceActModelValidator : AbstractValidator<AcceptanceActModel>
 {
+    /// <summary>
+    /// ctor
+    /// </summary>
     public AcceptanceActModelValidator()
     {
         Include(new AcceptanceActCreateModelValidator());

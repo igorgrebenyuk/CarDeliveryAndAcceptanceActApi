@@ -8,12 +8,18 @@ using CarDeliveryAndAcceptance.Services.Contracts.Models.Buyer;
 
 namespace CarDeliveryAndAcceptance.Services;
 
+/// <summary>
+/// Реализация <see cref="IBuyerService"/>
+/// </summary>
 public class BuyerService : IBuyerService
 {
     private readonly IMapper mapper;
     private readonly IUnitOfWork unitOfWork;
     private readonly IBuyerRepository buyerRepository;
     
+    /// <summary>
+    /// Инициализирует новый экземпляр <see cref="BuyerService"/>
+    /// </summary>
     public BuyerService(IBuyerRepository buyerRepository, IUnitOfWork unitOfWork, IMapper mapper)
     {
         this.buyerRepository = buyerRepository;

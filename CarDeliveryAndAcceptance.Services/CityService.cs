@@ -9,12 +9,18 @@ using CarDeliveryAndAcceptance.Services.Contracts.Models.City;
 
 namespace CarDeliveryAndAcceptance.Services;
 
+/// <summary>
+/// Реализация <see cref="ICityService"/>
+/// </summary>
 public class CityService : ICityService
 {
     private readonly IMapper mapper;
     private readonly IUnitOfWork unitOfWork;
     private readonly ICityRepository cityRepository;
     
+    /// <summary>
+    /// Инициализирует новый экземпляр <see cref="CityService"/>
+    /// </summary>
     public CityService(ICityRepository cityRepository,IUnitOfWork unitOfWork, IMapper mapper)
     {
         this.cityRepository = cityRepository;

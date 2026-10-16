@@ -8,6 +8,9 @@ using CarDeliveryAndAcceptance.Services.Contracts.Models.AcceptanceAct;
 
 namespace CarDeliveryAndAcceptance.Services;
 
+/// <summary>
+/// Реализация <see cref="IAcceptanceActService"/>
+/// </summary>
 public class AcceptanceActService : IAcceptanceActService
 {
     private readonly IMapper mapper;
@@ -18,6 +21,9 @@ public class AcceptanceActService : IAcceptanceActService
     private readonly ISalesmanRepository salesmanRepository;
     private readonly ICityRepository cityRepository;
     
+    /// <summary>
+    /// Инициализирует новый экземпляр <see cref="AcceptanceActService"/>
+    /// </summary>
     public AcceptanceActService(
         IAcceptanceActRepository acceptanceActRepository,
         ICarRepository carRepository,
@@ -36,12 +42,24 @@ public class AcceptanceActService : IAcceptanceActService
         this.mapper = mapper;
     }
     
+    /// <summary>
+    /// Выдать все акты
+    /// </summary>
+    /// <param name="cancellationToken"></param>
+    /// <returns></returns>
     async Task<IReadOnlyCollection<AcceptanceActListItemModel>> IAcceptanceActService.GetAcceptanceActsAsync(CancellationToken cancellationToken)
     {
         var result = await acceptanceActRepository.GetAcceptanceActsAsync(cancellationToken);
         return mapper.Map<IReadOnlyCollection<AcceptanceActListItemModel>>(result);
     }
-
+    
+    /// <summary>
+    /// Выдать акт по id
+    /// </summary>
+    /// <param name="id"></param>
+    /// <param name="cancellationToken"></param>
+    /// <returns></returns>
+    /// <exception cref="EntityNotFoundException{AcceptanceAct}"></exception>
     async Task<AcceptanceActModel> IAcceptanceActService.GetAcceptanceActByIdAsync(Guid id, CancellationToken cancellationToken)
     {
         var result = await acceptanceActRepository.GetAcceptanceActByIdAsync(id, cancellationToken);
@@ -51,7 +69,14 @@ public class AcceptanceActService : IAcceptanceActService
         }
         return mapper.Map<AcceptanceActModel>(result);
     }
-
+    
+    /// <summary>
+    /// Создать акт
+    /// </summary>
+    /// <param name="acceptanceActCreateModel"></param>
+    /// <param name="cancellationToken"></param>
+    /// <returns></returns>
+    /// <exception cref="CarDeliveryAndAcceptanceInvalidOperationException"></exception>
     async Task<AcceptanceActModel> IAcceptanceActService.CreateAcceptanceActAsync(AcceptanceActCreateModel acceptanceActCreateModel, CancellationToken cancellationToken)
     {
         await EnsureRelatedEntitiesExistAsync(
@@ -69,11 +94,17 @@ public class AcceptanceActService : IAcceptanceActService
 
         await unitOfWork.SaveChangesAsync(cancellationToken);
 
-        // Перечитываем акт, чтобы в ответе были вложенные город, покупатель, продавец и автомобиль
         var created = await acceptanceActRepository.GetAcceptanceActByIdAsync(entity.Id, cancellationToken);
         return mapper.Map<AcceptanceActModel>(created);
     }
-
+    
+    /// <summary>
+    /// Обновить акт
+    /// </summary>
+    /// <param name="acceptanceActModel"></param>
+    /// <param name="cancellationToken"></param>
+    /// <exception cref="EntityNotFoundException{AcceptanceAct}"></exception>
+    /// <exception cref="CarDeliveryAndAcceptanceInvalidOperationException"></exception>
     async Task IAcceptanceActService.UpdateAcceptanceActAsync(AcceptanceActUpdateModel acceptanceActModel, CancellationToken cancellationToken)
     {
         
@@ -104,7 +135,13 @@ public class AcceptanceActService : IAcceptanceActService
 
         await unitOfWork.SaveChangesAsync(cancellationToken);
     }
-
+    
+    /// <summary>
+    /// Удалить акт
+    /// </summary>
+    /// <param name="id"></param>
+    /// <param name="cancellationToken"></param>
+    /// <exception cref="EntityNotFoundException{AcceptanceAct}"></exception>
     async Task IAcceptanceActService.DeleteAcceptanceActAsync(Guid id, CancellationToken cancellationToken)
     {
         var entity = await acceptanceActRepository.GetAcceptanceActByIdAsync(id, cancellationToken);

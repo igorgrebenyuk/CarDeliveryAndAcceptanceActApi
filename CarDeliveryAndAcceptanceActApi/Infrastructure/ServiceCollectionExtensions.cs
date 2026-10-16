@@ -3,6 +3,9 @@ using Microsoft.Extensions.DependencyInjection.Extensions;
 
 namespace CarDeliveryAndAcceptanceActApi.Infrastructure;
 
+/// <summary>
+/// Методы расширения для <see cref="IServiceCollection"/>
+/// </summary>
 public static class ServiceCollectionExtensions
 {
     /// <summary>

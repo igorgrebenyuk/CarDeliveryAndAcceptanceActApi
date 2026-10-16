@@ -8,12 +8,18 @@ using CarDeliveryAndAcceptance.Services.Contracts.Models.Salesman;
 
 namespace CarDeliveryAndAcceptance.Services;
 
+/// <summary>
+/// Реализация <see cref="ISalesmanService"/>
+/// </summary>
 public class SalesmanService : ISalesmanService
 {
     private readonly IMapper mapper;
     private readonly IUnitOfWork unitOfWork;
     private readonly ISalesmanRepository salesmanRepository;
     
+    /// <summary>
+    /// Инициализирует новый экземпляр <see cref="SalesmanService"/>
+    /// </summary>
     public SalesmanService(ISalesmanRepository salesmanRepository,IUnitOfWork unitOfWork, IMapper mapper)
     {
         this.salesmanRepository = salesmanRepository;

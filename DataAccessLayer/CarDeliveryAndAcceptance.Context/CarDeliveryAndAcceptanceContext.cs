@@ -4,6 +4,9 @@ using Microsoft.EntityFrameworkCore;
 
 namespace CarDeliveryAndAcceptance.Context;
  
+/// <summary>
+/// Контекст базы данных приложения
+/// </summary>
 public class CarDeliveryAndAcceptanceContext : DbContext,
     IReader,
     IWriter,

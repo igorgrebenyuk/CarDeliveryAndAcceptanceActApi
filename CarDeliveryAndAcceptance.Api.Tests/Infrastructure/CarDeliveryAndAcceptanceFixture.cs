@@ -6,6 +6,9 @@ using Xunit;
 
 namespace CarDeliveryAndAcceptance.Api.Tests.Infrastructure;
 
+/// <summary>
+/// Фикстура для интеграционных тестов API
+/// </summary>
 public class CarDeliveryAndAcceptanceFixture: IAsyncLifetime
 {
     private bool disposed;

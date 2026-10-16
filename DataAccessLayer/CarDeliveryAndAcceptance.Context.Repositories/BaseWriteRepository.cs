@@ -19,6 +19,9 @@ public abstract class BaseWriteRepository<T> : IBaseWriteRepository<T>
         this.writerContext = writerContext;
     }
     
+    /// <summary>
+    /// Добавляет сущность, заполняя идентификатор и аудит
+    /// </summary>
     public void Add(T entity)
     {
         if (entity is IEntityWithId entityWithId &&

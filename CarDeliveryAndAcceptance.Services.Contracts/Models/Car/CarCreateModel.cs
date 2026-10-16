@@ -1,5 +1,8 @@
 ﻿namespace CarDeliveryAndAcceptance.Services.Contracts.Models.Car;
 
+/// <summary>
+/// Модель создания автомобиля
+/// </summary>
 public class CarCreateModel
 {
     
@@ -44,7 +47,6 @@ public class CarCreateModel
     public string BodyNumber { get; set; } = string.Empty;
 
         
-    // Color по идее можно хранить в виде специалього типа, просто у ИИ спросить
     /// <summary>
     /// Цвет
     /// </summary>
